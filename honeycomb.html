@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>honey. — Honeycomb</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Modak&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/shared.css" />
+
+  <style>
+    /* ── CONCEPT 3: HONEYCOMB ── */
+
+    body { background: var(--cream); overflow-x: hidden; }
+
+    /* NAV — cream scrolled */
+    .nav.is-scrolled {
+      background: rgba(251,247,238,0.9);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(18,10,0,0.07);
+    }
+
+    /* ── FIXED DRIP HEADER ── */
+    .drip-fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 300;
+      pointer-events: none;
+      transform-origin: top center;
+    }
+    .drip-fixed img {
+      width: 100%;
+      display: block;
+      height: clamp(55px, 7vw, 100px);
+      object-fit: cover;
+      object-position: top center;
+    }
+    /* Nav sits below drip */
+    .nav { top: clamp(55px, 7vw, 100px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
+      padding: clamp(8rem, 15vw, 16rem) var(--col-pad) clamp(4rem, 8vw, 8rem);
+      position: relative;
+      overflow: hidden;
+      background: var(--cream);
+    }
+
+    /* SVG honeycomb bg */
+    .hc-bg-pattern {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .hc-bg-pattern svg { width: 100%; height: 100%; opacity: 0.04; }
+
+    /* Left content */
+    .hero-left {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: var(--title-size);
+      line-height: 0.9;
+      letter-spacing: -0.015em;
+      color: var(--dark);
+    }
+    .hero-title .line { display: block; overflow: hidden; }
+
+    .hero-sub {
+      font-size: clamp(0.95rem, 1.15vw, 1.1rem);
+      color: rgba(18,10,0,0.6);
+      line-height: 1.7;
+      max-width: 30rem;
+    }
+    .hero-sub strong { color: var(--dark); font-weight: 600; }
+
+    /* Right: honeycomb + floating pills */
+    .hero-right {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-hc-wrap {
+      position: relative;
+      width: min(460px, 44vw);
+    }
+    .hero-hc-img {
+      width: 100%;
+      filter: drop-shadow(0 30px 70px rgba(201,146,10,0.25));
+    }
+
+    /* Floating pills positioned around honeycomb */
+    .fp {
+      position: absolute;
+      pointer-events: none;
+    }
+    .fp-1 { top: 8%;  left: -25%; }
+    .fp-2 { top: 48%; right: -22%; }
+    .fp-3 { bottom: 8%; left: -12%; }
+    .fp-4 { top: 20%;  right: -15%; }
+
+    /* ── TICKER ── */
+    .ticker-section {
+      border-top: 1px solid rgba(18,10,0,0.07);
+      border-bottom: 1px solid rgba(18,10,0,0.07);
+      overflow: hidden;
+      padding: 0.9rem 0;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      padding: var(--section-pad) var(--col-pad);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-bg-hc {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: url('../Honey/Images (Honey)/vecteezy_honeycomb-clipart-design-illustration_9399806.png') center / 500px repeat;
+      opacity: 0.025;
+    }
+
+    .about-inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .about-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .about-title {
+      font-family: var(--font-display);
+      font-size: var(--h2-size);
+      line-height: 1.0;
+      color: var(--dark);
+      margin-bottom: 3rem;
+      max-width: 14rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .about-cols {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .about-text p {
+      font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+      line-height: 1.75;
+      color: rgba(18,10,0,0.68);
+      margin-bottom: 1.2rem;
+      text-align: left;
+    }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-text strong { color: var(--dark); font-weight: 600; }
+    .about-text-r { text-align: right !important; }
+
+    .about-center-img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-center-img img {
+      width: clamp(120px, 16vw, 220px);
+      filter: drop-shadow(0 20px 40px rgba(201,146,10,0.3));
+    }
+
+    /* ── HEX FEATURES ── */
+    .features {
+      padding: var(--section-pad) var(--col-pad);
+      background: var(--cream-mid);
+      overflow: hidden;
+    }
+    .features-header {
+      max-width: var(--container-max);
+      margin: 0 auto 4rem;
+      text-align: center;
+    }
+    .features-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .features-title {
+      font-family: var(--font-display);
+      font-size: var(--h2-size);
+      color: var(--dark);
+    }
+
+    /* Hex grid – proper honeycomb layout */
+    .hex-container {
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    .hex-row {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: -1.5rem; /* overlap for honeycomb stagger */
+    }
+    .hex-row-2 {
+      transform: translateX(calc(100px + 0.75rem)); /* half of (card-width + gap) */
+      justify-content: flex-start;
+    }
+
+    /* The hex card itself */
+    .hcard {
+      position: relative;
+      width: 200px;
+      flex-shrink: 0;
+    }
+    .hcard-inner {
+      position: relative;
+      width: 200px;
+      padding-top: 115%; /* ~height of hex = width * tan(60°)/2 * 2 */
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      background: var(--cream);
+      border: none;
+      cursor: default;
+      transition: transform 0.4s var(--ease-primary), filter 0.4s;
+      overflow: hidden;
+    }
+    .hcard:hover .hcard-inner {
+      transform: scale(1.06) translateY(-4px);
+      filter: drop-shadow(0 12px 30px rgba(201,146,10,0.3));
+    }
+
+    /* Fill bg on hover */
+    .hcard-fill {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,184,0,0.2), rgba(255,107,0,0.1));
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .hcard:hover .hcard-fill { opacity: 1; }
+
+    .hcard-body {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      gap: 0.5rem;
+    }
+    .hcard-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      object-fit: contain;
+      transition: transform 0.4s var(--ease-primary);
+    }
+    .hcard:hover .hcard-icon { transform: rotateY(20deg) scale(1.15); }
+
+    .hcard-title {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--dark);
+      line-height: 1.2;
+    }
+
+    /* Center special hex with honeydrop */
+    .hcard-center .hcard-inner {
+      background: linear-gradient(135deg, var(--amber), var(--pumpkin));
+    }
+    .hcard-center .hcard-icon { width: 4rem; height: 4rem; }
+    .hcard-center .hcard-title { color: var(--dark); font-size: 1.1rem; }
+
+    /* ── CIRCLE SECTION ── */
+    .circle-section {
+      padding: var(--section-pad) var(--col-pad);
+      background: var(--cream);
+      overflow: hidden;
+    }
+    .circle-section-inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: clamp(3rem, 6vw, 8rem);
+    }
+
+    .circle-text { display: flex; flex-direction: column; gap: 1.5rem; }
+    .circle-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .circle-title {
+      font-family: var(--font-display);
+      font-size: var(--h2-size);
+      color: var(--dark);
+      line-height: 1.0;
+    }
+    .circle-body {
+      font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+      color: rgba(18,10,0,0.62);
+      line-height: 1.7;
+    }
+    .circle-body strong { color: var(--dark); font-weight: 600; }
+
+    /* Circle SVG diagram */
+    .circle-diagram {
+      position: relative;
+      width: min(420px, 44vw);
+      aspect-ratio: 1;
+      margin: 0 auto;
+    }
+    .circle-diagram svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+    .c-avatar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .c-node {
+      fill: var(--cream-mid);
+      stroke: rgba(201,146,10,0.3);
+      stroke-width: 2;
+      transition: fill 0.3s, stroke 0.3s;
+      cursor: pointer;
+    }
+    .c-node:hover, .c-node.active {
+      fill: rgba(255,184,0,0.15);
+      stroke: var(--amber);
+    }
+    .c-line {
+      stroke: rgba(201,146,10,0.2);
+      stroke-width: 1.5;
+      stroke-dasharray: 5 4;
+      fill: none;
+      stroke-dashoffset: 200;
+      transition: stroke 0.3s;
+    }
+    .c-center-node { fill: rgba(255,184,0,0.15); stroke: var(--amber); stroke-width: 3; }
+    .c-center-img { width: 40px; height: 40px; }
+
+    /* ── QUIZ ── */
+    .quiz-section {
+      background: var(--dark);
+      padding: var(--section-pad) var(--col-pad);
+      position: relative;
+      overflow: hidden;
+    }
+    .quiz-bg-hc {
+      position: absolute;
+      inset: 0;
+      background: url('../Honey/Images (Honey)/vecteezy_honeycomb-clipart-design-illustration_9399806.png') center / 400px repeat;
+      opacity: 0.03;
+      pointer-events: none;
+    }
+    .quiz-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .quiz-eyebrow { color: var(--amber); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
+    .quiz-title { font-family: var(--font-display); font-size: var(--h2-size); color: var(--cream); margin-bottom: 0.75rem; }
+    .quiz-subtitle { font-size: 0.9rem; color: rgba(251,247,238,0.45); margin-bottom: 3rem; }
+    .quiz-question { flex-direction: column; gap: 1.5rem; display: none; }
+    .quiz-question:first-child { display: flex; }
+    .quiz-q-text { font-family: var(--font-display); font-size: clamp(1.2rem, 2.5vw, 1.8rem); color: var(--cream); line-height: 1.2; }
+    .quiz-options { display: flex; flex-direction: column; gap: 0.75rem; }
+    .quiz-option {
+      background: rgba(255,248,232,0.05);
+      border: 1px solid rgba(255,248,232,0.1);
+      color: rgba(251,247,238,0.8);
+      border-radius: var(--r-md);
+      padding: 1rem 1.5rem;
+      font-family: var(--font-body); font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-fast);
+      text-align: left;
+    }
+    .quiz-option:hover { background: rgba(255,184,0,0.1); border-color: rgba(255,184,0,0.35); color: var(--cream); transform: translateX(6px); }
+    .quiz-option:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .quiz-result { display: none; flex-direction: column; align-items: center; gap: 1.5rem; }
+    .quiz-result-emoji { font-size: 5rem; line-height: 1; display: block; }
+    .quiz-result-tier { font-family: var(--font-display); font-size: 3.5rem; color: var(--cream); }
+    .quiz-result-text { font-size: 1rem; color: rgba(251,247,238,0.55); max-width: 420px; line-height: 1.65; }
+    .quiz-cta-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; }
+    .quiz-progress { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 2rem; }
+    .quiz-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(251,247,238,0.15); transition: background 0.3s; }
+    .quiz-dot.active { background: var(--amber); }
+
+    .btn-amber { background: var(--amber); color: var(--dark); font-weight: 700; }
+    .btn-amber:hover { box-shadow: 0 8px 28px rgba(255,184,0,0.4); }
+    .btn-ghost-hc { background: transparent; color: rgba(251,247,238,0.6); border: 1px solid rgba(251,247,238,0.2); }
+    .btn-ghost-hc:hover { border-color: rgba(255,184,0,0.4); color: var(--amber); }
+
+    /* FOOTER */
+    .footer { background: var(--cream); }
+
+    /* RESPONSIVE */
+    @media (max-width: 991px) {
+      .hero { grid-template-columns: 1fr; padding-top: 10rem; }
+      .hero-right { order: -1; }
+      .hero-hc-wrap { width: min(280px, 70vw); }
+      .fp { display: none; }
+      .about-cols { grid-template-columns: 1fr; gap: 2rem; }
+      .about-center-img { display: none; }
+      .circle-section-inner { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 767px) {
+      .hex-row-2 { transform: none; justify-content: center; }
+      .hcard { width: 140px; }
+      .hcard-inner { width: 140px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- FIXED DRIPPING HEADER -->
+  <div class="drip-fixed" id="drip-fixed">
+    <img
+      src="../Honey/Images (Honey)/vecteezy_honey-dripping-clipart-design-illustration_9384896.png"
+      alt=""
+      aria-hidden="true"
+      fetchpriority="high"
+    />
+  </div>
+
+  <!-- NAV (sits below drip) -->
+  <nav class="nav" id="nav">
+    <a href="honeycomb.html" class="nav-logo">honey.</a>
+    <ul class="nav-links">
+      <li><a href="#about">Story</a></li>
+      <li><a href="#features">Features</a></li>
+    </ul>
+    <a href="#quiz" class="btn btn-fill">
+      <span class="btn-bg-fill"></span>
+      <span class="btn-label">Find your Aura</span>
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <!-- SVG background honeycomb pattern -->
+    <div class="hc-bg-pattern" aria-hidden="true">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="hcpat" x="0" y="0" width="20" height="17.3" patternUnits="userSpaceOnUse">
+            <polygon points="10,1 19,5.8 19,15.5 10,20.3 1,15.5 1,5.8" fill="none" stroke="#C9920A" stroke-width="0.5"/>
+            <polygon points="20,10.65 29,15.5 29,25.15 20,30 11,25.15 11,15.5" fill="none" stroke="#C9920A" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+        <rect width="100" height="100" fill="url(#hcpat)"/>
+      </svg>
+    </div>
+
+    <!-- Left -->
+    <div class="hero-left">
+      <div class="badge" data-reveal="up" data-reveal-delay="0.1">
+        <span class="badge-dot"></span>
+        Early access — coming soon
+      </div>
+      <h1 class="hero-title">
+        <span class="line"><span data-split="words">your real life,</span></span>
+        <span class="line"><span data-split="words" data-split-delay="0.06">finally</span></span>
+        <span class="line"><span data-split="words" data-split-delay="0.12">shareable.</span></span>
+      </h1>
+      <p class="hero-sub">
+        The social media where <strong>real life is the content.</strong>
+        Not your highlight reel. Your actual habits, witnessed by the people you actually care about.
+      </p>
+      <div class="flex gap-sm" style="flex-wrap:wrap;">
+        <a href="#quiz"  class="btn btn-dark">Find your Aura</a>
+        <a href="#about" class="btn btn-outline-dark">Our story</a>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="hero-right">
+      <div class="hero-hc-wrap" data-tilt data-tilt-intensity="12">
+        <img
+          class="hero-hc-img"
+          src="../Honey/Images (Honey)/honeycomb-3d.png"
+          alt="A 3D honeycomb with golden honey"
+          data-reveal="scale"
+          data-reveal-delay="0.15"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="fp fp-1">
+        <div class="pill" data-float="9">
+          <img src="../Honey/Images (Honey)/honeydrop3d.png" alt="" loading="lazy" decoding="async" />
+          stick to it.
+        </div>
+      </div>
+      <div class="fp fp-2">
+        <div class="pill" data-float="6">
+          <img src="../Honey/Images (Honey)/bumblebee3d.png" alt="" loading="lazy" decoding="async" />
+          witnessed.
+        </div>
+      </div>
+      <div class="fp fp-3">
+        <div class="pill" data-float="11">
+          <img src="../Honey/Images (Honey)/beehive3d.png" alt="" loading="lazy" decoding="async" />
+          your circle.
+        </div>
+      </div>
+      <div class="fp fp-4">
+        <div class="pill" data-float="8">
+          for real.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-section" aria-hidden="true">
+    <div class="ticker-wrap">
+      <div class="ticker-inner">
+        <span class="ticker-item">Stick to it <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Real life. Real people. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Your Aura. Your habits. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Witnessed. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Life is sweet. Prove it. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Show up. Show off. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Not just fitness. Everything. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Your circle is waiting. <span class="ticker-sep"></span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-bg-hc" aria-hidden="true"></div>
+    <div class="about-inner">
+      <p class="about-eyebrow" data-reveal="up">The story</p>
+      <h2 class="about-title">
+        <span class="word-wrap" style="display:block"><span data-split="words">Honey, we need to talk.</span></span>
+      </h2>
+
+      <div class="about-cols">
+        <div class="about-text" data-reveal="left" data-reveal-delay="0.1">
+          <p>The book open for three months. The 7am alarm that quietly became 9:30. The habit you've restarted six times this year.</p>
+          <p>You meant it every single time. <strong>The problem was never motivation.</strong></p>
+        </div>
+
+        <div class="about-center-img">
+          <img
+            src="../Honey/Images (Honey)/beehive3d.png"
+            alt="A beehive with bees"
+            data-parallax="25"
+            data-reveal="scale"
+            data-reveal-delay="0.1"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+        <div class="about-text" data-reveal="right" data-reveal-delay="0.15">
+          <p>Social media was built to make your phone life feel important. Nothing was ever built to make your real life feel that way.</p>
+          <p>honey. is the social layer your real life has been missing. <strong>Real life is the content. Finally.</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES: HEX GRID -->
+  <section class="features" id="features">
+    <div class="features-header">
+      <p class="features-eyebrow" data-reveal="up">Six cells. Six reasons.</p>
+      <h2 class="features-title">
+        <span class="word-wrap"><span data-split="words">What makes honey. different.</span></span>
+      </h2>
+    </div>
+
+    <div class="hex-container">
+      <!-- Row 1: 3 hexagons -->
+      <div class="hex-row">
+        <div class="hcard" data-reveal="up" data-reveal-delay="0.05">
+          <div class="hcard-inner">
+            <div class="hcard-fill"></div>
+            <div class="hcard-body">
+              <img class="hcard-icon" src="../Honey/Images/3dicons-star-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+              <p class="hcard-title">Real life is the content</p>
+            </div>
+          </div>
+        </div>
+        <div class="hcard" data-reveal="up" data-reveal-delay="0.1">
+          <div class="hcard-inner">
+            <div class="hcard-fill"></div>
+            <div class="hcard-body">
+              <img class="hcard-icon" src="../Honey/Images/3dicons-heart-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+              <p class="hcard-title">Your Circle. Your people.</p>
+            </div>
+          </div>
+        </div>
+        <div class="hcard" data-reveal="up" data-reveal-delay="0.15">
+          <div class="hcard-inner">
+            <div class="hcard-fill"></div>
+            <div class="hcard-body">
+              <img class="hcard-icon" src="../Honey/Images/3dicons-crown-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+              <p class="hcard-title">Aura. Not a streak.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: 3 hexagons (offset) -->
+      <div class="hex-row hex-row-2">
+        <div class="hcard" data-reveal="up" data-reveal-delay="0.2">
+          <div class="hcard-inner">
+            <div class="hcard-fill"></div>
+            <div class="hcard-body">
+              <img class="hcard-icon" src="../Honey/Images/3dicons-ribbon-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+              <p class="hcard-title">Challenges. Any habit.</p>
+            </div>
+          </div>
+        </div>
+        <!-- Center special hex -->
+        <div class="hcard hcard-center" data-reveal="scale" data-reveal-delay="0.22">
+          <div class="hcard-inner">
+            <div class="hcard-body">
+              <img class="hcard-icon" src="../Honey/Images (Honey)/honeydrop3d.png" alt="" loading="lazy" decoding="async" />
+              <p class="hcard-title">honey.</p>
+            </div>
+          </div>
+        </div>
+        <div class="hcard" data-reveal="up" data-reveal-delay="0.25">
+          <div class="hcard-inner">
+            <div class="hcard-fill"></div>
+            <div class="hcard-body">
+              <img class="hcard-icon" src="../Honey/Images/3dicons-fire-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+              <p class="hcard-title">Not just fitness.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CIRCLE SECTION -->
+  <section class="circle-section" id="circle">
+    <div class="circle-section-inner container">
+      <div class="circle-text" data-reveal="left">
+        <p class="circle-eyebrow">Social mechanics</p>
+        <h2 class="circle-title">
+          <span class="word-wrap"><span data-split="words">Your Circle. Your people.</span></span>
+        </h2>
+        <p class="circle-body">
+          A small, intentional group — default 5, max 8 — who
+          <strong>witness your habits.</strong>
+          Not followers. Not an audience. The people who actually give a damn.
+        </p>
+        <p class="circle-body">
+          Every Circle has its own feed, weekly summary, and shared momentum.
+          When you log, <strong>they see it.</strong>
+          When they log, <strong>you see it.</strong>
+          That's how consistency becomes contagious.
+        </p>
+        <a href="#quiz" class="btn btn-dark" style="align-self:flex-start;margin-top:0.5rem;">Find your Aura</a>
+      </div>
+
+      <!-- SVG Circle diagram -->
+      <div class="circle-diagram" data-reveal="scale" data-reveal-delay="0.1">
+        <svg id="circle-svg" viewBox="0 0 300 300">
+          <!-- Connecting lines -->
+          <line class="c-line" id="cl-1" x1="150" y1="150" x2="150" y2="50"/>
+          <line class="c-line" id="cl-2" x1="150" y1="150" x2="240" y2="105"/>
+          <line class="c-line" id="cl-3" x1="150" y1="150" x2="240" y2="195"/>
+          <line class="c-line" id="cl-4" x1="150" y1="150" x2="150" y2="250"/>
+          <line class="c-line" id="cl-5" x1="150" y1="150" x2="60"  y2="195"/>
+          <line class="c-line" id="cl-6" x1="150" y1="150" x2="60"  y2="105"/>
+
+          <!-- Outer circles -->
+          <circle class="c-node" cx="150" cy="50"  r="30" data-n="0"/>
+          <circle class="c-node" cx="240" cy="105" r="30" data-n="1"/>
+          <circle class="c-node" cx="240" cy="195" r="30" data-n="2"/>
+          <circle class="c-node" cx="150" cy="250" r="30" data-n="3"/>
+          <circle class="c-node" cx="60"  cy="195" r="30" data-n="4"/>
+
+          <!-- Center (you) -->
+          <circle class="c-center-node" cx="150" cy="150" r="38"/>
+
+          <!-- Labels -->
+          <text x="150" y="50"  text-anchor="middle" dy=".35em" font-size="11" fill="rgba(18,10,0,0.5)" font-family="DM Sans">friend</text>
+          <text x="240" y="105" text-anchor="middle" dy=".35em" font-size="11" fill="rgba(18,10,0,0.5)" font-family="DM Sans">partner</text>
+          <text x="240" y="195" text-anchor="middle" dy=".35em" font-size="11" fill="rgba(18,10,0,0.5)" font-family="DM Sans">sibling</text>
+          <text x="150" y="250" text-anchor="middle" dy=".35em" font-size="11" fill="rgba(18,10,0,0.5)" font-family="DM Sans">friend</text>
+          <text x="60"  y="195" text-anchor="middle" dy=".35em" font-size="11" fill="rgba(18,10,0,0.5)" font-family="DM Sans">friend</text>
+          <text x="150" y="150" text-anchor="middle" dy=".35em" font-size="13" fill="rgba(18,10,0,0.8)" font-family="Modak">you</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="quiz-section" id="quiz" data-quiz>
+    <div class="quiz-bg-hc" aria-hidden="true"></div>
+    <div class="quiz-inner">
+      <p class="quiz-eyebrow">Before you join</p>
+      <h2 class="quiz-title">What's your Aura?</h2>
+      <p class="quiz-subtitle">3 questions. Your Aura score. Then claim your spot on the waitlist.</p>
+
+      <div class="quiz-progress">
+        <div class="quiz-dot active" data-q-dot="0"></div>
+        <div class="quiz-dot" data-q-dot="1"></div>
+        <div class="quiz-dot" data-q-dot="2"></div>
+      </div>
+
+      <div class="quiz-question" data-question="0">
+        <p class="quiz-q-text">How many habits have you tried to build and abandoned this year?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" data-value="0">1 or 2</button>
+          <button class="quiz-option" data-value="1">3 to 5</button>
+          <button class="quiz-option" data-value="2">More than 5</button>
+        </div>
+      </div>
+      <div class="quiz-question" data-question="1">
+        <p class="quiz-q-text">When you tell your friends about a new habit, what actually happens?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" data-value="0">They check in on me</button>
+          <button class="quiz-option" data-value="1">They hype me up then forget</button>
+          <button class="quiz-option" data-value="2">I don't tell anyone</button>
+        </div>
+      </div>
+      <div class="quiz-question" data-question="2">
+        <p class="quiz-q-text">The one habit you'd actually stick to if your Circle was watching...</p>
+        <div class="quiz-options">
+          <button class="quiz-option" data-value="1">Reading more</button>
+          <button class="quiz-option" data-value="0">A morning routine</button>
+          <button class="quiz-option" data-value="1">Moving my body</button>
+          <button class="quiz-option" data-value="0">Cooking more</button>
+        </div>
+      </div>
+
+      <div class="quiz-result">
+        <div class="quiz-result-emoji"></div>
+        <h3 class="quiz-result-tier">Golden</h3>
+        <p class="quiz-result-text">You've got the intention. What's been missing is the right people watching.</p>
+        <div class="quiz-cta-group">
+          <a href="#" class="btn btn-amber">Claim your spot</a>
+          <button class="btn btn-ghost-hc" data-quiz-restart>Try again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <a href="honeycomb.html" class="footer-logo">honey.</a>
+    <p class="footer-tagline">Life is sweet. Prove it. — 2026</p>
+    <nav class="footer-cta-group">
+      <a href="#quiz"  class="btn btn-dark">Find your Aura</a>
+      <a href="#about" class="btn btn-outline-dark">Our story</a>
+    </nav>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="https://unpkg.com/split-type@0.3.4/umd/index.min.js"></script>
+  <script src="js/shared.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // Fixed drip header: fade out as page scrolls
+      const drip = document.getElementById('drip-fixed');
+      if (drip) {
+        gsap.to(drip, {
+          opacity: 0,
+          scaleY: 0.5,
+          ease: 'none',
+          scrollTrigger: {
+            start: '120px top',
+            end: '400px top',
+            scrub: true,
+          },
+        });
+      }
+
+      // SVG circle lines animate in (stroke-dashoffset)
+      const lines = document.querySelectorAll('.c-line');
+      lines.forEach((line, i) => {
+        const len = line.getTotalLength ? line.getTotalLength() : 200;
+        line.style.strokeDasharray = len;
+        line.style.strokeDashoffset = len;
+        gsap.to(line, {
+          strokeDashoffset: 0,
+          duration: 0.6,
+          delay: i * 0.12,
+          ease: 'expo.out',
+          scrollTrigger: {
+            trigger: '#circle',
+            start: '0% 80%',
+            once: true,
+          },
+        });
+      });
+
+      // Outer circle nodes pop in
+      gsap.from('.c-node', {
+        scale: 0,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: 'back.out(2)',
+        transformOrigin: 'center center',
+        scrollTrigger: {
+          trigger: '#circle',
+          start: '0% 80%',
+          once: true,
+        },
+        delay: 0.5,
+      });
+
+      // Hex cards: handled by shared initRevealAnimations (data-reveal with stagger delays on .hcard parent)
+
+      // Quiz dots update
+      const dots = document.querySelectorAll('[data-q-dot]');
+      document.addEventListener('click', (e) => {
+        if (!e.target.matches('.quiz-option')) return;
+        const q = e.target.closest('[data-question]');
+        if (!q) return;
+        const idx = parseInt(q.dataset.question) + 1;
+        dots.forEach((d, i) => d.classList.toggle('active', i <= idx));
+      });
+
+      // SVG node hover ripple
+      document.querySelectorAll('.c-node').forEach((node, i) => {
+        node.addEventListener('mouseenter', () => node.classList.add('active'));
+        node.addEventListener('mouseleave', () => node.classList.remove('active'));
+      });
+    });
+  </script>
+</body>
+</html>

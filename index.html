@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>honey. — Landing Page Concepts</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Modak&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    ::-webkit-scrollbar { display: none; }
+    * { -ms-overflow-style: none; scrollbar-width: none; }
+
+    :root {
+      --cream: #FBF7EE;
+      --dark:  #120a00;
+      --amber: #ffb800;
+      --gold:  #C9920A;
+      --muted: #8A7450;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      min-height: 100svh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HERO ── */
+    .hub-hero {
+      padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 6vw, 6rem);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hub-drip {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      pointer-events: none;
+    }
+    .hub-drip img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .hub-logo {
+      font-family: 'Modak', cursive;
+      font-size: clamp(4rem, 12vw, 9rem);
+      color: var(--dark);
+      line-height: 1;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .hub-tagline {
+      font-size: clamp(1rem, 1.5vw, 1.3rem);
+      color: var(--muted);
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+
+    .hub-sub {
+      font-size: 0.88rem;
+      color: rgba(18,10,0,0.45);
+      margin-bottom: 3rem;
+    }
+
+    /* ── GRID ── */
+    .hub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 clamp(1.5rem, 5vw, 4rem) clamp(4rem, 7vw, 7rem);
+    }
+
+    .hub-card {
+      border-radius: 1.5rem;
+      overflow: hidden;
+      text-decoration: none;
+      color: var(--dark);
+      border: 1px solid rgba(18,10,0,0.07);
+      transition: transform 0.35s cubic-bezier(0.5,0.75,0,1), box-shadow 0.35s;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .hub-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 60px rgba(201,146,10,0.18);
+    }
+
+    .hub-card-preview {
+      height: 220px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hub-card-preview img {
+      position: absolute;
+      bottom: 0;
+      width: 60%;
+      max-width: 180px;
+      filter: drop-shadow(0 10px 25px rgba(0,0,0,0.2));
+      transition: transform 0.5s cubic-bezier(0.5,0.75,0,1);
+    }
+    .hub-card:hover .hub-card-preview img { transform: translateY(-10px) scale(1.05); }
+
+    .hub-card-preview-label {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border-radius: 100px;
+      backdrop-filter: blur(8px);
+    }
+
+    /* Card colors */
+    .card-1 .hub-card-preview { background: linear-gradient(135deg, #FBF7EE, #F5EFE0); }
+    .card-1 .hub-card-preview-label { background: rgba(201,146,10,0.12); color: #C9920A; border: 1px solid rgba(201,146,10,0.2); }
+
+    .card-2 .hub-card-preview { background: linear-gradient(135deg, #120a00, #1A1200); }
+    .card-2 .hub-card-preview-label { background: rgba(255,184,0,0.12); color: #ffb800; border: 1px solid rgba(255,184,0,0.2); }
+    .card-2 .hub-card-body { background: #120a00; color: #FBF7EE; }
+    .card-2 .hub-card-num, .card-2 .hub-card-sub { color: rgba(251,247,238,0.45); }
+
+    .card-3 .hub-card-preview { background: linear-gradient(135deg, #FBF7EE, #EDE4CC); }
+    .card-3 .hub-card-preview-label { background: rgba(201,146,10,0.12); color: #C9920A; border: 1px solid rgba(201,146,10,0.2); }
+
+    .card-4 .hub-card-preview { background: linear-gradient(135deg, #ffb800, #ff6b00); }
+    .card-4 .hub-card-preview-label { background: rgba(18,10,0,0.15); color: #120a00; border: 1px solid rgba(18,10,0,0.15); }
+
+    .card-5 .hub-card-preview { background: linear-gradient(135deg, #FBF7EE, #F5EFE0); }
+    .card-5 .hub-card-preview-label { background: rgba(201,146,10,0.12); color: #C9920A; border: 1px solid rgba(201,146,10,0.2); }
+
+    .hub-card-body {
+      padding: 1.5rem;
+      background: white;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .hub-card-num {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .hub-card-name {
+      font-family: 'Modak', cursive;
+      font-size: 1.35rem;
+      line-height: 1.1;
+    }
+
+    .hub-card-sub {
+      font-size: 0.82rem;
+      color: rgba(18,10,0,0.5);
+      line-height: 1.5;
+      margin-top: 0.1rem;
+    }
+
+    .hub-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+    .tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 100px;
+      background: rgba(201,146,10,0.08);
+      color: var(--gold);
+      border: 1px solid rgba(201,146,10,0.15);
+    }
+    .card-2 .tag { background: rgba(255,184,0,0.1); color: #ffb800; border-color: rgba(255,184,0,0.2); }
+
+    .hub-card-arrow {
+      margin-top: auto;
+      padding-top: 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: gap 0.2s;
+    }
+    .hub-card:hover .hub-card-arrow { gap: 0.7rem; }
+    .card-2 .hub-card-arrow { color: #ffb800; }
+
+    /* ── FOOTER ── */
+    .hub-footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(18,10,0,0.07);
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HERO -->
+  <div class="hub-hero">
+    <div class="hub-drip">
+      <img src="../Honey/Images (Honey)/vecteezy_honey-dripping-clipart-design-illustration_9383393.png" alt="" aria-hidden="true" fetchpriority="high" />
+    </div>
+    <span class="hub-logo">honey.</span>
+    <p class="hub-tagline">5 Landing Page Concepts</p>
+    <p class="hub-sub">Sugar referansına sadık kalarak, Honey markası için hazırlandı.</p>
+  </div>
+
+  <!-- CARDS GRID -->
+  <div class="hub-grid">
+
+    <!-- 1 Golden Flow -->
+    <a href="golden-flow.html" class="hub-card card-1">
+      <div class="hub-card-preview">
+        <img src="../Honey/Images (Honey)/honeyjar.png" alt="" loading="lazy" decoding="async" />
+        <span class="hub-card-preview-label">Light Mode</span>
+      </div>
+      <div class="hub-card-body">
+        <p class="hub-card-num">Konsept 01</p>
+        <h2 class="hub-card-name">Golden Flow</h2>
+        <p class="hub-card-sub">Balın akışkanlığı ve doğallığı. Cream zemin, 3D jar tilt, hexagonal feature grid.</p>
+        <div class="hub-card-tags">
+          <span class="tag">Cream BG</span>
+          <span class="tag">3D Tilt</span>
+          <span class="tag">Hex Grid</span>
+          <span class="tag">Parallax</span>
+        </div>
+        <p class="hub-card-arrow">Görüntüle →</p>
+      </div>
+    </a>
+
+    <!-- 2 Dark Nectar -->
+    <a href="dark-nectar.html" class="hub-card card-2">
+      <div class="hub-card-preview">
+        <img src="../Honey/Images (Honey)/honeydrop3d.png" alt="" loading="lazy" decoding="async" />
+        <span class="hub-card-preview-label">Dark Mode</span>
+      </div>
+      <div class="hub-card-body">
+        <p class="hub-card-num">Konsept 02</p>
+        <h2 class="hub-card-name">Dark Nectar</h2>
+        <p class="hub-card-sub">Gece vakti bal: lüks, gizemli, premium. Parlayan Aura orb ve glass morphism kartlar.</p>
+        <div class="hub-card-tags">
+          <span class="tag">Dark BG</span>
+          <span class="tag">Aura Orb</span>
+          <span class="tag">Glass UI</span>
+          <span class="tag">Orbiting</span>
+        </div>
+        <p class="hub-card-arrow">Görüntüle →</p>
+      </div>
+    </a>
+
+    <!-- 3 Honeycomb -->
+    <a href="honeycomb.html" class="hub-card card-3">
+      <div class="hub-card-preview">
+        <img src="../Honey/Images (Honey)/honeycomb-3d.png" alt="" loading="lazy" decoding="async" />
+        <span class="hub-card-preview-label">Structural</span>
+      </div>
+      <div class="hub-card-body">
+        <p class="hub-card-num">Konsept 03</p>
+        <h2 class="hub-card-name">Honeycomb</h2>
+        <p class="hub-card-sub">Petekteki düzen ve harmoni. Fixed drip header, hexagonal CSS cards, Circle SVG diyagramı.</p>
+        <div class="hub-card-tags">
+          <span class="tag">Fixed Drip</span>
+          <span class="tag">Hex Clip</span>
+          <span class="tag">SVG Lines</span>
+          <span class="tag">Circle UI</span>
+        </div>
+        <p class="hub-card-arrow">Görüntüle →</p>
+      </div>
+    </a>
+
+    <!-- 4 Liquid Gold -->
+    <a href="liquid-gold.html" class="hub-card card-4">
+      <div class="hub-card-preview">
+        <img src="../Honey/Images (Honey)/creative honey stick dripping honey_17329992.png" alt="" loading="lazy" decoding="async" />
+        <span class="hub-card-preview-label">Carousel</span>
+      </div>
+      <div class="hub-card-body">
+        <p class="hub-card-num">Konsept 04</p>
+        <h2 class="hub-card-name">Liquid Gold</h2>
+        <p class="hub-card-sub">Sugar'ın Flickity carousel mekaniği. 4 slide'lı hero, gradient arka planlar, yatay scroll features.</p>
+        <div class="hub-card-tags">
+          <span class="tag">Flickity</span>
+          <span class="tag">4 Slides</span>
+          <span class="tag">H-Scroll</span>
+          <span class="tag">Auto-play</span>
+        </div>
+        <p class="hub-card-arrow">Görüntüle →</p>
+      </div>
+    </a>
+
+    <!-- 5 Sweet Witness -->
+    <a href="sweet-witness.html" class="hub-card card-5">
+      <div class="hub-card-preview">
+        <img src="../Honey/Images (Honey)/beehive3d.png" alt="" loading="lazy" decoding="async" />
+        <span class="hub-card-preview-label">Editorial</span>
+      </div>
+      <div class="hub-card-body">
+        <p class="hub-card-num">Konsept 05</p>
+        <h2 class="hub-card-name">Sweet Witness</h2>
+        <p class="hub-card-sub">Kinetik tipografi, Witness interaktif showcase, editorial story layout. En marka-odaklı konsept.</p>
+        <div class="hub-card-tags">
+          <span class="tag">Kinetic Type</span>
+          <span class="tag">Witness</span>
+          <span class="tag">Story</span>
+          <span class="tag">Particles</span>
+        </div>
+        <p class="hub-card-arrow">Görüntüle →</p>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="hub-footer">
+    honey. landing pages — LANDING PROJECT — 2026
+  </div>
+
+</body>
+</html>

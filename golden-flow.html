@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>honey. — Golden Flow</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Modak&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/shared.css" />
+
+  <style>
+    /* ── CONCEPT 1: GOLDEN FLOW ── */
+    :root { --page-bg: var(--cream); }
+
+    body { background: var(--page-bg); }
+
+    /* ── DRIP HERO (replaces old drip-header + nav + hero) ── */
+    .drip-hero {
+      background: var(--cream);
+      position: relative;
+      overflow: visible;
+    }
+
+    /* Full-width drip image — natural aspect ratio shows all drips */
+    .drip-img-wrap {
+      width: 100%;
+      pointer-events: none;
+      line-height: 0;
+    }
+    .drip-img-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* honey. logo above hero content */
+    .drip-logo-bar {
+      padding: 1.8rem var(--col-pad) 0;
+      max-width: var(--container-max);
+      margin: 0 auto;
+    }
+    .drip-logo-link {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      color: var(--dark);
+      line-height: 1;
+      letter-spacing: -0.01em;
+    }
+
+    /* Hero content grid (same 2-col as before, no nav padding needed) */
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 3rem var(--col-pad) clamp(3rem,6vw,6rem);
+    }
+
+    .hero-bg-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .hero-bg-text span {
+      font-family: var(--font-display);
+      font-size: clamp(8rem, 28vw, 26rem);
+      color: rgba(201,146,10,0.04);
+      white-space: nowrap;
+      letter-spacing: -0.02em;
+      user-select: none;
+    }
+
+    .hero-content { display: flex; flex-direction: column; gap: 1.75rem; }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: var(--title-size);
+      line-height: 0.92;
+      letter-spacing: -0.015em;
+      color: var(--dark);
+    }
+    .hero-title .accent { color: var(--gold); }
+
+    .hero-sub {
+      max-width: 36rem;
+      font-size: clamp(1rem, 1.2vw, 1.15rem);
+      color: rgba(18,10,0,0.65);
+      line-height: 1.65;
+    }
+    .hero-sub strong { color: var(--dark); font-weight: 600; }
+
+    .hero-ctas { display: flex; gap: 0.9rem; flex-wrap: wrap; align-items: center; }
+
+    /* Jar 3D */
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .jar-wrapper {
+      position: relative;
+      width: min(480px, 45vw);
+      cursor: none;
+    }
+    .jar-wrapper img {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 30px 60px rgba(201,146,10,0.25));
+      transform-style: preserve-3d;
+      transform: perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+      transition: transform 0.08s linear, filter 0.3s ease;
+    }
+    .jar-wrapper:hover img {
+      filter: drop-shadow(0 40px 80px rgba(201,146,10,0.4));
+    }
+
+    /* Floating pills around jar */
+    .jar-pills {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .jar-pill {
+      position: absolute;
+    }
+    .jar-pill:nth-child(1) { top: 15%; left: -20%; }
+    .jar-pill:nth-child(2) { top: 55%; right: -18%; }
+    .jar-pill:nth-child(3) { bottom: 12%; left: -10%; }
+
+    /* ── TICKER ── */
+    .ticker-section {
+      background: var(--cream);
+      border-top: 1px solid rgba(18,10,0,0.07);
+      border-bottom: 1px solid rgba(18,10,0,0.07);
+      overflow: hidden;
+      padding: 0.9rem 0;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      padding: var(--section-pad) var(--col-pad);
+      background: var(--cream-mid);
+      overflow: hidden;
+    }
+    .about-inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: clamp(3rem, 6vw, 8rem);
+    }
+
+    .about-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .about-title {
+      font-family: var(--font-display);
+      font-size: var(--h2-size);
+      line-height: 1.0;
+      margin-bottom: 2rem;
+      color: var(--dark);
+    }
+    .about-body p {
+      font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+      line-height: 1.75;
+      color: rgba(18,10,0,0.72);
+      margin-bottom: 1.2rem;
+    }
+    .about-body p:last-child { margin-bottom: 0; }
+    .about-body strong { color: var(--dark); font-weight: 600; }
+
+    .about-visual {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    .about-visual img {
+      width: min(320px, 80%);
+      filter: drop-shadow(0 20px 50px rgba(201,146,10,0.3));
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: var(--section-pad) var(--col-pad);
+      background: var(--cream);
+      overflow: hidden;
+    }
+    .features-header {
+      max-width: var(--container-max);
+      margin: 0 auto 4rem;
+      text-align: center;
+    }
+    .features-title {
+      font-family: var(--font-display);
+      font-size: var(--h2-size);
+      color: var(--dark);
+    }
+
+    /* Hex grid */
+    .hex-grid {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .hex-card {
+      position: relative;
+      background: var(--cream-mid);
+      border-radius: var(--r-lg);
+      padding: 2.5rem 2rem;
+      overflow: hidden;
+      cursor: default;
+      transition:
+        transform var(--dur-mid) var(--ease-primary),
+        box-shadow var(--dur-mid) var(--ease-primary);
+      border: 1px solid rgba(18,10,0,0.06);
+    }
+    .hex-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(201,146,10,0.15);
+    }
+
+    /* Fill animation bg */
+    .hex-card-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,184,0,0.12), rgba(255,107,0,0.06));
+      transform: translateY(101%);
+      transition: transform 0.5s var(--ease-primary);
+      z-index: 0;
+    }
+    .hex-card:hover .hex-card-bg { transform: translateY(0); }
+
+    .hex-card-content { position: relative; z-index: 1; }
+
+    .hex-icon {
+      width: 4rem;
+      height: 4rem;
+      object-fit: contain;
+      margin-bottom: 1.25rem;
+      transition: transform 0.5s var(--ease-primary);
+    }
+    .hex-card:hover .hex-icon { transform: rotateY(20deg) scale(1.1); }
+
+    .hex-num {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--amber);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .hex-card-title {
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.75rem;
+      line-height: 1.25;
+    }
+    .hex-card-text {
+      font-size: 0.88rem;
+      color: rgba(18,10,0,0.6);
+      line-height: 1.65;
+    }
+
+    /* ── QUIZ ── */
+    .quiz-section {
+      background: var(--dark);
+      padding: var(--section-pad) var(--col-pad);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quiz-bg-orb {
+      position: absolute;
+      width: 70vw;
+      height: 70vw;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,184,0,0.08) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+    }
+    .quiz-bg-hex {
+      position: absolute;
+      inset: 0;
+      background-image: url('../Honey/Images (Honey)/honeycomb-3d.png');
+      background-size: 300px;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+
+    .quiz-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .quiz-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1rem;
+    }
+    .quiz-title {
+      font-family: var(--font-display);
+      font-size: var(--h2-size);
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+    }
+    .quiz-subtitle {
+      font-size: 0.9rem;
+      color: rgba(251,247,238,0.5);
+      margin-bottom: 3rem;
+    }
+
+    /* Questions */
+    .quiz-question {
+      flex-direction: column;
+      gap: 1.5rem;
+      display: none;
+    }
+    .quiz-question:first-child { display: flex; }
+
+    .quiz-q-text {
+      font-size: clamp(1.1rem, 2.2vw, 1.6rem);
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.3;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .quiz-option {
+      background: rgba(251,247,238,0.06);
+      border: 1px solid rgba(251,247,238,0.12);
+      color: rgba(251,247,238,0.85);
+      border-radius: var(--r-md);
+      padding: 1rem 1.5rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-fast);
+      text-align: left;
+    }
+    .quiz-option:hover {
+      background: rgba(255,184,0,0.12);
+      border-color: rgba(255,184,0,0.4);
+      color: var(--cream);
+      transform: translateX(6px);
+    }
+    .quiz-option:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* Result */
+    .quiz-result {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .quiz-result-emoji {
+      font-size: 5rem;
+      line-height: 1;
+      display: block;
+    }
+
+    .quiz-result-tier {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--cream);
+    }
+    .quiz-result-text {
+      font-size: 1rem;
+      color: rgba(251,247,238,0.65);
+      max-width: 420px;
+      line-height: 1.65;
+    }
+
+    .quiz-cta-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .btn-amber {
+      background: var(--amber);
+      color: var(--dark);
+      font-weight: 700;
+    }
+    .btn-amber:hover { box-shadow: 0 8px 28px rgba(255,184,0,0.4); }
+
+    .btn-ghost {
+      background: transparent;
+      color: rgba(251,247,238,0.6);
+      border: 1px solid rgba(251,247,238,0.2);
+    }
+    .btn-ghost:hover { border-color: rgba(251,247,238,0.5); color: var(--cream); }
+
+    /* Progress dots */
+    .quiz-progress {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    .quiz-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(251,247,238,0.2);
+      transition: background 0.3s;
+    }
+    .quiz-dot.active { background: var(--amber); }
+
+    /* ── FOOTER ── */
+    .footer { background: var(--cream); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 991px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .jar-wrapper { width: min(300px, 70vw); }
+      .about-inner { grid-template-columns: 1fr; }
+      .about-visual { order: -1; }
+    }
+    @media (max-width: 767px) {
+      .hex-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .jar-pills { display: none; }
+    }
+    @media (max-width: 480px) {
+      .hex-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════
+       DRIP HERO — honey. logo + full-width drip image + hero content
+       No separate nav — logo lives inside this section
+  ═══════════════════════════════════════════════ -->
+  <header class="drip-hero" id="hero">
+
+    <!-- Full-width honey drip image (natural height shows all drips) -->
+    <div class="drip-img-wrap">
+      <img
+        src="../Honey/Images (Honey)/vecteezy_honey-dripping-clipart-design-illustration_9384896.png"
+        alt=""
+        aria-hidden="true"
+        fetchpriority="high"
+      />
+    </div>
+
+    <!-- honey. logo row -->
+    <div class="drip-logo-bar">
+      <a href="golden-flow.html" class="drip-logo-link">honey.</a>
+    </div>
+
+    <!-- Background large text -->
+    <div class="hero-bg-text" aria-hidden="true">
+      <span>HONEY</span>
+    </div>
+
+    <!-- 2-column hero content -->
+    <div class="hero-inner">
+      <!-- Left: copy -->
+      <div class="hero-content">
+        <div class="badge">
+          <span class="badge-dot"></span>
+          Early access — coming soon
+        </div>
+
+        <h1 class="hero-title">
+          <span class="word-wrap" style="display:block">
+            <span data-split="words">your real life,</span>
+          </span>
+          <span class="word-wrap" style="display:block">
+            <span data-split="words" data-split-delay="0.08">finally <span class="accent">shareable.</span></span>
+          </span>
+        </h1>
+
+        <p class="hero-sub">
+          The social media where <strong>real life is the content.</strong>
+          Not your highlight reel. Not your aesthetic.
+          What you actually did.
+        </p>
+
+        <div class="hero-ctas">
+          <a href="#quiz" class="btn btn-dark">Find your Aura</a>
+          <a href="#about" class="btn btn-outline-dark">Our story</a>
+        </div>
+      </div>
+
+      <!-- Right: 3D jar -->
+      <div class="hero-visual">
+        <div class="jar-wrapper" data-tilt data-tilt-intensity="14" id="jar-wrap">
+          <img
+            src="../Honey/Images (Honey)/honeyjar.png"
+            alt="A jar of golden honey with a wooden dipper"
+            fetchpriority="high"
+          />
+        </div>
+
+        <div class="jar-pills">
+          <div class="pill" data-float="10">
+            <img src="../Honey/Images (Honey)/honeydrop3d.png" alt="" loading="lazy" decoding="async" />
+            stick to it.
+          </div>
+          <div class="pill" data-float="7">
+            <img src="../Honey/Images (Honey)/bumblebee3d.png" alt="" loading="lazy" decoding="async" />
+            witnessed.
+          </div>
+          <div class="pill" data-float="12">
+            <img src="../Honey/Images (Honey)/honeycomb-3d.png" alt="" loading="lazy" decoding="async" />
+            for real.
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- TICKER -->
+  <div class="ticker-section" aria-hidden="true">
+    <div class="ticker-wrap">
+      <div class="ticker-inner">
+        <span class="ticker-item">Stick to it <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Real life. Real people. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Your Aura. Your habits. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Witnessed. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Life is sweet. Prove it. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Show up. Show off. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Not just fitness. Everything. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Your circle is waiting. <span class="ticker-sep"></span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-inner">
+      <div>
+        <p class="about-eyebrow" data-reveal="up">The story</p>
+        <h2 class="about-title">
+          <span class="word-wrap" style="display:block">
+            <span data-split="words">Honey, we need to talk.</span>
+          </span>
+        </h2>
+        <div class="about-body" data-reveal="up" data-reveal-delay="0.15">
+          <p>The book open for three months. The 7am alarm that quietly became 9:30.
+          The habit you've restarted six times this year.</p>
+          <p>You meant it every single time. The problem was never motivation.
+          <strong>The problem was doing it alone.</strong></p>
+          <p>Social media was built to make your phone life feel important.
+          Nothing was ever built to make your real life feel that way.</p>
+          <p>honey. is the social layer your real life has been missing.
+          The morning run. The book you finished. The habit your best friend witnessed.
+          <strong>Real life is the content. Finally.</strong></p>
+        </div>
+      </div>
+      <div class="about-visual">
+        <img
+          src="../Honey/Images (Honey)/honeydrop3d.png"
+          alt="A golden honey drop"
+          data-parallax="30"
+          data-reveal="scale"
+          data-reveal-delay="0.1"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="features-header">
+      <p class="about-eyebrow" data-reveal="up">What makes honey. different</p>
+      <h2 class="features-title">
+        <span class="word-wrap" style="display:block">
+          <span data-split="words">Six reasons your circle needs this.</span>
+        </span>
+      </h2>
+    </div>
+
+    <div class="hex-grid container">
+      <!-- Card 1 -->
+      <div class="hex-card" data-reveal="up" data-reveal-delay="0.05">
+        <div class="hex-card-bg"></div>
+        <div class="hex-card-content">
+          <img class="hex-icon" src="../Honey/Images/3dicons-star-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+          <p class="hex-num">01</p>
+          <h3 class="hex-card-title">Real life is the content</h3>
+          <p class="hex-card-text">Not highlights. Not aesthetics. The book you actually finished. The run you did at 6am. Raw. Real. Witnessed.</p>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="hex-card" data-reveal="up" data-reveal-delay="0.1">
+        <div class="hex-card-bg"></div>
+        <div class="hex-card-content">
+          <img class="hex-icon" src="../Honey/Images/3dicons-heart-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+          <p class="hex-num">02</p>
+          <h3 class="hex-card-title">Your Circle. Your people.</h3>
+          <p class="hex-card-text">A small, trusted group who witness your habits. Not followers. Not an audience. The people who actually give a damn.</p>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="hex-card" data-reveal="up" data-reveal-delay="0.15">
+        <div class="hex-card-bg"></div>
+        <div class="hex-card-content">
+          <img class="hex-icon" src="../Honey/Images/3dicons-crown-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+          <p class="hex-num">03</p>
+          <h3 class="hex-card-title">Aura. Not a streak.</h3>
+          <p class="hex-card-text">Streaks break. Aura builds. Your consistency becomes your identity — and your Circle watches it glow.</p>
+        </div>
+      </div>
+      <!-- Card 4 -->
+      <div class="hex-card" data-reveal="up" data-reveal-delay="0.2">
+        <div class="hex-card-bg"></div>
+        <div class="hex-card-content">
+          <img class="hex-icon" src="../Honey/Images/3dicons-ribbon-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+          <p class="hex-num">04</p>
+          <h3 class="hex-card-title">Challenges. Any habit.</h3>
+          <p class="hex-card-text">7-day reading sprint. Morning walks. Cooking streak. Join public challenges or start one with your people.</p>
+        </div>
+      </div>
+      <!-- Card 5 -->
+      <div class="hex-card" data-reveal="up" data-reveal-delay="0.25">
+        <div class="hex-card-bg"></div>
+        <div class="hex-card-content">
+          <img class="hex-icon" src="../Honey/Images/3dicons-fire-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+          <p class="hex-num">05</p>
+          <h3 class="hex-card-title">Not just fitness.</h3>
+          <p class="hex-card-text">Sleep. Books. Cooking. Journaling. Morning routines. honey. is the glow-up social for your whole entire life.</p>
+        </div>
+      </div>
+      <!-- Card 6 -->
+      <div class="hex-card" data-reveal="up" data-reveal-delay="0.3">
+        <div class="hex-card-bg"></div>
+        <div class="hex-card-content">
+          <img class="hex-icon" src="../Honey/Images/3dicons-medal-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+          <p class="hex-num">06</p>
+          <h3 class="hex-card-title">Show up. Show off.</h3>
+          <p class="hex-card-text">Build the habit. Get witnessed. Let your Circle brag about you. That's the whole thing — and it actually works.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="quiz-section" id="quiz" data-quiz>
+    <div class="quiz-bg-orb"></div>
+    <div class="quiz-bg-hex"></div>
+
+    <div class="quiz-inner">
+      <p class="quiz-eyebrow">Before you join</p>
+      <h2 class="quiz-title">What's your Aura?</h2>
+      <p class="quiz-subtitle">3 questions. Your Aura score. Then claim your spot on the waitlist.</p>
+
+      <div class="quiz-progress">
+        <div class="quiz-dot active" data-q-dot="0"></div>
+        <div class="quiz-dot" data-q-dot="1"></div>
+        <div class="quiz-dot" data-q-dot="2"></div>
+      </div>
+
+      <!-- Q1 -->
+      <div class="quiz-question" data-question="0">
+        <p class="quiz-q-text">How many habits have you tried to build and abandoned this year?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" data-value="0">1 or 2</button>
+          <button class="quiz-option" data-value="1">3 to 5</button>
+          <button class="quiz-option" data-value="2">More than 5</button>
+        </div>
+      </div>
+      <!-- Q2 -->
+      <div class="quiz-question" data-question="1">
+        <p class="quiz-q-text">When you tell your friends about a new habit, what actually happens?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" data-value="0">They check in on me</button>
+          <button class="quiz-option" data-value="1">They hype me up then forget</button>
+          <button class="quiz-option" data-value="2">I don't tell anyone</button>
+        </div>
+      </div>
+      <!-- Q3 -->
+      <div class="quiz-question" data-question="2">
+        <p class="quiz-q-text">The one habit you'd actually stick to if your Circle was watching...</p>
+        <div class="quiz-options">
+          <button class="quiz-option" data-value="1">Reading more</button>
+          <button class="quiz-option" data-value="0">A morning routine</button>
+          <button class="quiz-option" data-value="1">Moving my body</button>
+          <button class="quiz-option" data-value="0">Cooking more</button>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div class="quiz-result">
+        <div class="quiz-result-emoji"></div>
+        <h3 class="quiz-result-tier">Golden</h3>
+        <p class="quiz-result-text">You've got the intention. What's been missing is the right people watching.</p>
+        <div class="quiz-cta-group">
+          <a href="#" class="btn btn-amber">Claim your spot</a>
+          <button class="btn btn-ghost" data-quiz-restart>Try again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <a href="golden-flow.html" class="footer-logo">honey.</a>
+    <p class="footer-tagline">Life is sweet. Prove it. — 2026</p>
+    <nav class="footer-cta-group" aria-label="Footer navigation">
+      <a href="#quiz" class="btn btn-dark">Find your Aura</a>
+      <a href="#about" class="btn btn-outline-dark">Our story</a>
+    </nav>
+  </footer>
+
+  <!-- ── SCRIPTS ── -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="https://unpkg.com/split-type@0.3.4/umd/index.min.js"></script>
+  <script src="js/shared.js"></script>
+
+  <script>
+    // ── GOLDEN FLOW: page-specific JS ──
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // Drip image entrance — slides down from above
+      const dripWrap = document.querySelector('.drip-img-wrap');
+      if (dripWrap) {
+        gsap.from(dripWrap, {
+          yPercent: -100,
+          duration: 1.2,
+          ease: 'expo.out',
+          delay: 0.05,
+        });
+      }
+
+      // Logo pop in
+      gsap.from('.drip-logo-link', {
+        opacity: 0, y: -10, duration: 0.5, delay: 0.8, ease: 'expo.out',
+      });
+
+      // Badge pop in
+      gsap.from('.badge', {
+        opacity: 0, y: 12, duration: 0.5, delay: 0.6, ease: 'expo.out',
+      });
+
+      // Hero sub + ctas
+      gsap.from('.hero-sub', {
+        opacity: 0, y: 18, duration: 0.6, delay: 0.75, ease: 'expo.out',
+      });
+      gsap.from('.hero-ctas', {
+        opacity: 0, y: 18, duration: 0.6, delay: 0.9, ease: 'expo.out',
+      });
+
+      // Jar load animation
+      gsap.from('.jar-wrapper img', {
+        opacity: 0,
+        scale: 0.75,
+        duration: 1.0,
+        delay: 0.6,
+        ease: 'elastic.out(1, 0.6)',
+      });
+
+      // Jar pills load
+      gsap.from('.jar-pill', {
+        opacity: 0,
+        scale: 0.7,
+        duration: 0.6,
+        delay: 1.2,
+        stagger: 0.15,
+        ease: 'back.out(2)',
+      });
+
+      // Hero background text parallax
+      const bgText = document.querySelector('.hero-bg-text span');
+      if (bgText) {
+        gsap.to(bgText, {
+          yPercent: 30,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.hero',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 1.5,
+          },
+        });
+      }
+
+      // Quiz progress dots
+      const dots = document.querySelectorAll('[data-q-dot]');
+      document.addEventListener('click', (e) => {
+        if (!e.target.matches('.quiz-option')) return;
+        const question = e.target.closest('[data-question]');
+        if (!question) return;
+        const idx = parseInt(question.dataset.question) + 1;
+        dots.forEach((d, i) => d.classList.toggle('active', i <= idx));
+      });
+    });
+  </script>
+</body>
+</html>

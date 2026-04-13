@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>honey. — Dark Nectar</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Modak&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/shared.css" />
+
+  <style>
+    /* ── CONCEPT 2: DARK NECTAR ── */
+    :root {
+      --dark-bg:   #120a00;
+      --dark-surf: rgba(30, 18, 0, 0.7);
+    }
+
+    body {
+      background: var(--dark-bg);
+      color: var(--cream);
+    }
+
+    /* Override shared defaults for dark mode */
+    .divider { background: var(--glass-border); }
+    .footer  { background: var(--dark-bg); }
+    .footer-logo, .footer-tagline { color: var(--cream); }
+    .footer-tagline { color: rgba(251,247,238,0.4); }
+
+    /* NAV dark */
+    .nav-logo { color: var(--cream); }
+    .nav-links a { color: rgba(251,247,238,0.65); }
+    .nav-links a:hover { color: var(--cream); opacity: 1; }
+    .nav.is-scrolled {
+      background: rgba(18,10,0,0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,248,232,0.06);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem var(--col-pad) 6rem;
+      overflow: hidden;
+    }
+
+    /* Mega background text */
+    .mega-bg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .mega-bg span {
+      font-family: var(--font-display);
+      font-size: clamp(12rem, 38vw, 38rem);
+      color: rgba(255,248,232,0.022);
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+      user-select: none;
+      will-change: transform;
+    }
+
+    /* Gradient orbs */
+    .orb-container {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0;
+      animation: orbFloat var(--dur) ease-in-out infinite alternate;
+    }
+    .orb-1 {
+      width: 55vw; height: 55vw;
+      background: radial-gradient(circle, rgba(255,184,0,0.18) 0%, transparent 70%);
+      top: -10%; left: -15%;
+      --dur: 8s;
+    }
+    .orb-2 {
+      width: 45vw; height: 45vw;
+      background: radial-gradient(circle, rgba(255,107,0,0.14) 0%, transparent 70%);
+      bottom: -5%; right: -10%;
+      --dur: 11s;
+      animation-delay: -4s;
+    }
+    .orb-3 {
+      width: 30vw; height: 30vw;
+      background: radial-gradient(circle, rgba(188,19,254,0.12) 0%, transparent 70%);
+      top: 40%; left: 55%;
+      --dur: 14s;
+      animation-delay: -7s;
+    }
+    @keyframes orbFloat {
+      from { transform: translate(0,0) scale(1); opacity: 1; }
+      to   { transform: translate(3%, 5%) scale(1.08); opacity: 0.8; }
+    }
+
+    /* Aura orb (center) */
+    .aura-orb-wrap {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .aura-orb {
+      width: clamp(180px, 28vw, 380px);
+      height: clamp(180px, 28vw, 380px);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,184,0,0.28) 0%, rgba(255,107,0,0.12) 45%, transparent 70%);
+      box-shadow: 0 0 120px rgba(255,184,0,0.2);
+      animation: orbPulse 3.5s ease-in-out infinite;
+    }
+    @keyframes orbPulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; box-shadow: 0 0 100px rgba(255,184,0,0.2); }
+      50%       { transform: scale(1.12); opacity: 1; box-shadow: 0 0 180px rgba(255,184,0,0.35); }
+    }
+
+    /* Orbiting 3D objects */
+    .orbit-ring {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .orbit-obj {
+      position: absolute;
+      width: clamp(60px, 8vw, 100px);
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6));
+    }
+    /* Positions set by GSAP at runtime — no CSS transform here */
+
+    /* Hero content */
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.75rem;
+    }
+
+    .hero-badge {
+      background: rgba(255,184,0,0.1);
+      border: 1px solid rgba(255,184,0,0.25);
+      color: var(--amber);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: var(--title-size);
+      line-height: 0.92;
+      letter-spacing: -0.015em;
+      color: var(--cream);
+      max-width: 14rem;
+      text-align: center;
+    }
+    .hero-title em {
+      font-style: normal;
+      background: var(--honey-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      max-width: 36rem;
+      font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+      color: rgba(251,247,238,0.55);
+      line-height: 1.7;
+    }
+
+    .btn-nectar {
+      background: linear-gradient(135deg, var(--amber), var(--pumpkin));
+      color: var(--dark);
+      font-weight: 700;
+    }
+    .btn-nectar:hover { box-shadow: 0 10px 35px rgba(255,184,0,0.45); }
+
+    .btn-ghost-nectar {
+      background: transparent;
+      color: rgba(251,247,238,0.6);
+      border: 1px solid rgba(251,247,238,0.18);
+    }
+    .btn-ghost-nectar:hover {
+      border-color: rgba(255,184,0,0.4);
+      color: var(--amber);
+    }
+
+    /* ── TICKER (dark) ── */
+    .ticker-section {
+      background: transparent;
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
+      overflow: hidden;
+      padding: 0.9rem 0;
+    }
+    .ticker-item { color: rgba(251,247,238,0.3); }
+
+    /* ── ABOUT ── */
+    .about {
+      padding: var(--section-pad) var(--col-pad);
+      position: relative;
+      overflow: hidden;
+    }
+    .about-inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: clamp(3rem, 6vw, 8rem);
+    }
+    .about-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1rem;
+    }
+    .about-title {
+      font-family: var(--font-display);
+      font-size: var(--h2-size);
+      line-height: 1.0;
+      color: var(--cream);
+      margin-bottom: 2rem;
+    }
+    .about-body p {
+      font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+      line-height: 1.75;
+      color: rgba(251,247,238,0.55);
+      margin-bottom: 1.2rem;
+    }
+    .about-body strong { color: var(--amber); font-weight: 600; }
+
+    /* Glass card */
+    .glass-card {
+      background: var(--dark-surf);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--r-lg);
+      padding: 2.5rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      transition: transform var(--dur-mid) var(--ease-primary), box-shadow var(--dur-mid) var(--ease-primary);
+    }
+    .glass-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+
+    .about-visual {
+      display: flex;
+      justify-content: center;
+    }
+    .about-visual img {
+      width: min(320px, 80%);
+      filter: drop-shadow(0 20px 50px rgba(255,184,0,0.2));
+      transition: transform 0.5s var(--ease-primary), filter 0.5s;
+    }
+    .about-visual img:hover {
+      transform: rotate(-5deg) scale(1.05);
+      filter: drop-shadow(0 30px 70px rgba(255,184,0,0.4));
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: var(--section-pad) var(--col-pad);
+      position: relative;
+      overflow: hidden;
+    }
+    .features-header {
+      max-width: var(--container-max);
+      margin: 0 auto 4rem;
+    }
+    .features-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 1rem;
+    }
+    .features-title {
+      font-family: var(--font-display);
+      font-size: var(--h2-size);
+      color: var(--cream);
+    }
+
+    .feature-list {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .feature-card {
+      display: grid;
+      grid-template-columns: 5rem 1fr;
+      align-items: center;
+      gap: 2rem;
+      padding: 2rem 2.5rem;
+      background: rgba(255,248,232,0.04);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--r-md);
+      transition:
+        transform var(--dur-mid) var(--ease-primary),
+        background var(--dur-mid) var(--ease-primary),
+        box-shadow var(--dur-mid) var(--ease-primary);
+    }
+    .feature-card:hover {
+      transform: translateX(8px);
+      background: rgba(255,184,0,0.06);
+      border-color: rgba(255,184,0,0.2);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+    .feature-card:hover .feature-icon {
+      transform: rotateY(15deg) scale(1.1);
+    }
+
+    .feature-num {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: rgba(255,184,0,0.18);
+      line-height: 1;
+      text-align: right;
+    }
+    .feature-icon-wrap {
+      width: 3rem;
+      height: 3rem;
+      flex-shrink: 0;
+    }
+    .feature-icon {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform 0.5s var(--ease-primary);
+    }
+    .feature-icon-col {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .feature-body {}
+    .feature-title {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+      color: var(--cream);
+      margin-bottom: 0.4rem;
+    }
+    .feature-text {
+      font-size: 0.88rem;
+      color: rgba(251,247,238,0.5);
+      line-height: 1.65;
+    }
+
+    /* ── TIERS ── */
+    .tiers {
+      padding: var(--section-pad) var(--col-pad);
+      position: relative;
+      overflow: hidden;
+    }
+    .tiers-header {
+      max-width: var(--container-max);
+      margin: 0 auto 4rem;
+      text-align: center;
+    }
+    .tiers-title {
+      font-family: var(--font-display);
+      font-size: var(--h2-size);
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+    }
+    .tiers-sub {
+      color: rgba(251,247,238,0.45);
+      font-size: 0.95rem;
+    }
+
+    .tiers-grid {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    .tier-card {
+      border-radius: var(--r-lg);
+      padding: 2.5rem 1.75rem;
+      background: rgba(255,248,232,0.04);
+      border: 1px solid var(--glass-border);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      transition: transform var(--dur-mid) var(--ease-primary), box-shadow var(--dur-mid) var(--ease-primary);
+    }
+    .tier-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+    }
+
+    .tier-icon {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin: 0 auto 0.5rem;
+      display: block;
+      filter: drop-shadow(0 8px 20px rgba(255,184,0,0.3));
+      transition: transform 0.4s var(--ease-primary), filter 0.4s;
+    }
+    .tier-card:hover .tier-icon {
+      transform: scale(1.1) translateY(-4px);
+      filter: drop-shadow(0 14px 30px rgba(255,184,0,0.5));
+    }
+
+    .tier-label {
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 1.4rem;
+      color: var(--cream);
+    }
+    .tier-threshold {
+      font-size: 0.78rem;
+      color: var(--amber);
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .tier-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      object-fit: contain;
+      margin-top: 0.5rem;
+    }
+
+    /* ── QUIZ ── */
+    .quiz-section {
+      padding: var(--section-pad) var(--col-pad);
+      position: relative;
+      overflow: hidden;
+    }
+    .quiz-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+    .quiz-eyebrow {
+      color: var(--amber);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .quiz-title {
+      font-family: var(--font-display);
+      font-size: var(--h2-size);
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+    }
+    .quiz-subtitle {
+      font-size: 0.9rem;
+      color: rgba(251,247,238,0.45);
+      margin-bottom: 3rem;
+    }
+    .quiz-question {
+      flex-direction: column;
+      gap: 1.5rem;
+      display: none;
+    }
+    .quiz-question:first-child { display: flex; }
+    .quiz-q-text {
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      color: var(--cream);
+      line-height: 1.2;
+    }
+    .quiz-options { display: flex; flex-direction: column; gap: 0.75rem; }
+    .quiz-option {
+      background: rgba(255,248,232,0.05);
+      border: 1px solid rgba(255,248,232,0.1);
+      color: rgba(251,247,238,0.8);
+      border-radius: var(--r-md);
+      padding: 1rem 1.5rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-fast);
+      text-align: left;
+    }
+    .quiz-option:hover {
+      background: rgba(255,184,0,0.1);
+      border-color: rgba(255,184,0,0.35);
+      color: var(--cream);
+      transform: translateX(6px);
+    }
+    .quiz-option:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .quiz-result {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .quiz-result-emoji {
+      font-size: 5rem;
+      line-height: 1;
+      display: block;
+    }
+    .quiz-result-tier { font-family: var(--font-display); font-size: 3.5rem; color: var(--cream); }
+    .quiz-result-text { font-size: 1rem; color: rgba(251,247,238,0.55); max-width: 420px; line-height: 1.65; }
+    .quiz-cta-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; }
+    .quiz-progress { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 2rem; }
+    .quiz-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(251,247,238,0.15); transition: background 0.3s; }
+    .quiz-dot.active { background: var(--amber); }
+
+    /* ── FOOTER (dark) ── */
+    .footer {
+      border-top: 1px solid var(--glass-border);
+    }
+    .btn-outline-dark {
+      color: rgba(251,247,238,0.6);
+      border-color: rgba(251,247,238,0.2);
+    }
+    .btn-outline-dark:hover { border-color: var(--amber); color: var(--amber); }
+    .btn-dark { background: rgba(255,184,0,0.12); color: var(--amber); border: 1px solid rgba(255,184,0,0.25); }
+    .btn-dark:hover { background: var(--amber); color: var(--dark); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 991px) {
+      .about-inner { grid-template-columns: 1fr; }
+      .tiers-grid { grid-template-columns: repeat(2, 1fr); }
+      .feature-card { grid-template-columns: 1fr; }
+      .feature-num { display: none; }
+    }
+    @media (max-width: 767px) {
+      .tiers-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+      .orbit-obj-2, .orbit-obj-4 { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <a href="dark-nectar.html" class="nav-logo">honey.</a>
+    <ul class="nav-links">
+      <li><a href="#about">Story</a></li>
+      <li><a href="#features">Features</a></li>
+    </ul>
+    <a href="#quiz" class="btn btn-nectar">Find your Aura</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <!-- Mega background text -->
+    <div class="mega-bg" aria-hidden="true">
+      <span id="mega-text">HONEY</span>
+    </div>
+
+    <!-- Gradient orbs -->
+    <div class="orb-container" aria-hidden="true">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Aura orb center -->
+    <div class="aura-orb-wrap" aria-hidden="true">
+      <div class="aura-orb" id="aura-orb"></div>
+    </div>
+
+    <!-- Orbiting 3D objects -->
+    <div class="orbit-ring" aria-hidden="true" id="orbit-ring">
+      <img class="orbit-obj orbit-obj-1" src="../Honey/Images (Honey)/beehive3d.png" alt="" loading="lazy" decoding="async" />
+      <img class="orbit-obj orbit-obj-2" src="../Honey/Images (Honey)/bumblebee3d.png" alt="" loading="lazy" decoding="async" />
+      <img class="orbit-obj orbit-obj-3" src="../Honey/Images (Honey)/honeycomb-3d.png" alt="" loading="lazy" decoding="async" />
+      <img class="orbit-obj orbit-obj-4" src="../Honey/Images (Honey)/honeydrop3d.png" alt="" loading="lazy" decoding="async" />
+    </div>
+
+    <!-- Content -->
+    <div class="hero-content">
+      <div class="badge hero-badge" data-reveal="up" data-reveal-delay="0.2">
+        <span class="badge-dot"></span>
+        Early access — coming soon
+      </div>
+
+      <h1 class="hero-title">
+        <span class="word-wrap" style="display:block">
+          <span data-split="words">your real life,</span>
+        </span>
+        <span class="word-wrap" style="display:block">
+          <span data-split="words" data-split-delay="0.08">finally <em>shareable.</em></span>
+        </span>
+      </h1>
+
+      <p class="hero-sub">
+        The social layer your real life has been missing.
+        Not your highlight reel. Your actual habits. Your actual people.
+      </p>
+
+      <div class="flex gap-sm" style="flex-wrap:wrap;justify-content:center;">
+        <a href="#quiz"  class="btn btn-nectar">Find your Aura</a>
+        <a href="#about" class="btn btn-ghost-nectar">Our story</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-section" aria-hidden="true">
+    <div class="ticker-wrap">
+      <div class="ticker-inner">
+        <span class="ticker-item">Stick to it <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Real life. Real people. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Your Aura. Your habits. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Witnessed. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Life is sweet. Prove it. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Show up. Show off. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Not just fitness. Everything. <span class="ticker-sep"></span></span>
+        <span class="ticker-item">Your circle is waiting. <span class="ticker-sep"></span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-inner">
+      <div>
+        <p class="about-eyebrow" data-reveal="up">The story</p>
+        <h2 class="about-title">
+          <span class="word-wrap" style="display:block">
+            <span data-split="words">Honey, we need to talk.</span>
+          </span>
+        </h2>
+        <div class="about-body" data-reveal="up" data-reveal-delay="0.15">
+          <p>The book open for three months. The 7am alarm that quietly became 9:30.
+          The habit you've restarted six times this year.</p>
+          <p>You meant it every single time. The problem was never motivation.
+          <strong>The problem was doing it alone.</strong></p>
+          <p>Social media was built to make your phone life feel important.
+          Nothing was ever built to make your real life feel that way.</p>
+          <p>honey. is the social layer your real life has been missing.
+          The morning run. The book you finished. The habit your best friend witnessed.
+          <strong>Real life is the content. Finally.</strong></p>
+        </div>
+      </div>
+      <div class="about-visual">
+        <div class="glass-card" data-reveal="scale" data-reveal-delay="0.1">
+          <img
+            src="../Honey/Images (Honey)/creative honey stick dripping honey_17329992.png"
+            alt="Honey dripping from a dipper"
+            data-parallax="20"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="features-header">
+      <p class="features-eyebrow" data-reveal="up">What makes honey. different</p>
+      <h2 class="features-title">
+        <span class="word-wrap" style="display:block">
+          <span data-split="words">Six things your real life deserves.</span>
+        </span>
+      </h2>
+    </div>
+
+    <div class="feature-list container">
+      <div class="feature-card" data-reveal="up" data-reveal-delay="0.05">
+        <div class="feature-icon-col">
+          <span class="feature-num">01</span>
+          <div class="feature-icon-wrap">
+            <img class="feature-icon" src="../Honey/Images/3dicons-star-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+          </div>
+        </div>
+        <div class="feature-body">
+          <h3 class="feature-title">Real life is the content</h3>
+          <p class="feature-text">Not highlights. Not aesthetics. The book you actually finished. The run you did at 6am. Raw. Real. Witnessed.</p>
+        </div>
+      </div>
+      <div class="feature-card" data-reveal="up" data-reveal-delay="0.1">
+        <div class="feature-icon-col">
+          <span class="feature-num">02</span>
+          <div class="feature-icon-wrap">
+            <img class="feature-icon" src="../Honey/Images/3dicons-heart-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+          </div>
+        </div>
+        <div class="feature-body">
+          <h3 class="feature-title">Your Circle. Your people.</h3>
+          <p class="feature-text">A small, trusted group who witness your habits. Not followers. Not an audience.</p>
+        </div>
+      </div>
+      <div class="feature-card" data-reveal="up" data-reveal-delay="0.15">
+        <div class="feature-icon-col">
+          <span class="feature-num">03</span>
+          <div class="feature-icon-wrap">
+            <img class="feature-icon" src="../Honey/Images/3dicons-crown-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+          </div>
+        </div>
+        <div class="feature-body">
+          <h3 class="feature-title">Aura. Not a streak.</h3>
+          <p class="feature-text">Streaks break. Aura builds. Your consistency becomes your identity — and your Circle watches it glow.</p>
+        </div>
+      </div>
+      <div class="feature-card" data-reveal="up" data-reveal-delay="0.2">
+        <div class="feature-icon-col">
+          <span class="feature-num">04</span>
+          <div class="feature-icon-wrap">
+            <img class="feature-icon" src="../Honey/Images/3dicons-ribbon-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+          </div>
+        </div>
+        <div class="feature-body">
+          <h3 class="feature-title">Challenges. Any habit.</h3>
+          <p class="feature-text">7-day reading sprint. Morning walks. Cooking streak. Join challenges or start one with your people.</p>
+        </div>
+      </div>
+      <div class="feature-card" data-reveal="up" data-reveal-delay="0.25">
+        <div class="feature-icon-col">
+          <span class="feature-num">05</span>
+          <div class="feature-icon-wrap">
+            <img class="feature-icon" src="../Honey/Images/3dicons-fire-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+          </div>
+        </div>
+        <div class="feature-body">
+          <h3 class="feature-title">Not just fitness.</h3>
+          <p class="feature-text">Sleep. Books. Cooking. Journaling. Morning routines. honey. is the glow-up social for your whole entire life.</p>
+        </div>
+      </div>
+      <div class="feature-card" data-reveal="up" data-reveal-delay="0.3">
+        <div class="feature-icon-col">
+          <span class="feature-num">06</span>
+          <div class="feature-icon-wrap">
+            <img class="feature-icon" src="../Honey/Images/3dicons-medal-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+          </div>
+        </div>
+        <div class="feature-body">
+          <h3 class="feature-title">Show up. Show off.</h3>
+          <p class="feature-text">Build the habit. Get witnessed. Let your Circle brag about you. That's the whole thing — and it works.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AURA TIERS -->
+  <section class="tiers" id="tiers">
+    <div class="tiers-header">
+      <p class="features-eyebrow" data-reveal="up">Identity system</p>
+      <h2 class="tiers-title">
+        <span class="word-wrap"><span data-split="words">Your consistency, visualised.</span></span>
+      </h2>
+      <p class="tiers-sub" data-reveal="up" data-reveal-delay="0.1">Four tiers. Earned through follow-through — not volume.</p>
+    </div>
+
+    <div class="tiers-grid container">
+      <div class="tier-card" data-reveal="up" data-reveal-delay="0.05">
+        <img class="tier-icon" src="../Honey/Images/3dicons-sun-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+        <h3 class="tier-label">Raw Honey</h3>
+        <p class="tier-threshold">Just started</p>
+        <p style="font-size:0.82rem;color:rgba(251,247,238,0.4);line-height:1.5;">Minimal glow. Steady pulse. The beginning of something real.</p>
+      </div>
+      <div class="tier-card" data-reveal="up" data-reveal-delay="0.1">
+        <img class="tier-icon" src="../Honey/Images/3dicons-fire-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+        <h3 class="tier-label">Golden</h3>
+        <p class="tier-threshold">40% over 3 weeks</p>
+        <p style="font-size:0.82rem;color:rgba(251,247,238,0.4);line-height:1.5;">Vivid amber flame. Faster pulse. The momentum is real.</p>
+      </div>
+      <div class="tier-card" data-reveal="up" data-reveal-delay="0.15">
+        <img class="tier-icon" src="../Honey/Images/3dicons-heart-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+        <h3 class="tier-label">Dripping</h3>
+        <p class="tier-threshold">65% over 8 weeks</p>
+        <p style="font-size:0.82rem;color:rgba(251,247,238,0.4);line-height:1.5;">Wild Strawberry enters. Liquid distortion. Chrome Heart floats.</p>
+      </div>
+      <div class="tier-card" data-reveal="up" data-reveal-delay="0.2">
+        <img class="tier-icon" src="../Honey/Images/3dicons-crown-dynamic-color.png" alt="" loading="lazy" decoding="async" />
+        <h3 class="tier-label">Pure Gold</h3>
+        <p class="tier-threshold">80% over 16 weeks</p>
+        <p style="font-size:0.82rem;color:rgba(251,247,238,0.4);line-height:1.5;">Hyper Magenta & Gold plasma. Maximum glow. Fully unlocked.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="quiz-section" id="quiz" data-quiz>
+    <div class="orb-container" aria-hidden="true">
+      <div class="orb orb-1" style="opacity:0.5"></div>
+    </div>
+
+    <div class="quiz-inner">
+      <p class="quiz-eyebrow">Before you join</p>
+      <h2 class="quiz-title">What's your Aura?</h2>
+      <p class="quiz-subtitle">3 questions. Your Aura score. Then claim your spot on the waitlist.</p>
+
+      <div class="quiz-progress">
+        <div class="quiz-dot active" data-q-dot="0"></div>
+        <div class="quiz-dot" data-q-dot="1"></div>
+        <div class="quiz-dot" data-q-dot="2"></div>
+      </div>
+
+      <div class="quiz-question" data-question="0">
+        <p class="quiz-q-text">How many habits have you tried to build and abandoned this year?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" data-value="0">1 or 2</button>
+          <button class="quiz-option" data-value="1">3 to 5</button>
+          <button class="quiz-option" data-value="2">More than 5</button>
+        </div>
+      </div>
+      <div class="quiz-question" data-question="1">
+        <p class="quiz-q-text">When you tell your friends about a new habit, what actually happens?</p>
+        <div class="quiz-options">
+          <button class="quiz-option" data-value="0">They check in on me</button>
+          <button class="quiz-option" data-value="1">They hype me up then forget</button>
+          <button class="quiz-option" data-value="2">I don't tell anyone</button>
+        </div>
+      </div>
+      <div class="quiz-question" data-question="2">
+        <p class="quiz-q-text">The one habit you'd actually stick to if your Circle was watching...</p>
+        <div class="quiz-options">
+          <button class="quiz-option" data-value="1">Reading more</button>
+          <button class="quiz-option" data-value="0">A morning routine</button>
+          <button class="quiz-option" data-value="1">Moving my body</button>
+          <button class="quiz-option" data-value="0">Cooking more</button>
+        </div>
+      </div>
+
+      <div class="quiz-result">
+        <div class="quiz-result-emoji"></div>
+        <h3 class="quiz-result-tier">Golden</h3>
+        <p class="quiz-result-text">You've got the intention. What's been missing is the right people watching.</p>
+        <div class="quiz-cta-group">
+          <a href="#" class="btn btn-nectar">Claim your spot</a>
+          <button class="btn btn-ghost-nectar" data-quiz-restart>Try again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <a href="dark-nectar.html" class="footer-logo">honey.</a>
+    <p class="footer-tagline">Life is sweet. Prove it. — 2026</p>
+    <nav class="footer-cta-group" aria-label="Footer navigation">
+      <a href="#quiz"  class="btn btn-nectar">Find your Aura</a>
+      <a href="#about" class="btn btn-ghost-nectar">Our story</a>
+    </nav>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+  <script src="https://unpkg.com/split-type@0.3.4/umd/index.min.js"></script>
+  <script src="js/shared.js"></script>
+
+  <script>
+    // ── DARK NECTAR: page-specific JS ──
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // Mega text scroll parallax (horizontal)
+      const megaText = document.getElementById('mega-text');
+      if (megaText) {
+        gsap.to(megaText, {
+          xPercent: -18,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.hero',
+            start: 'top top',
+            end: 'bottom top',
+            scrub: 2,
+          },
+        });
+      }
+
+      // Orbiting animation: use GSAP trig loop to avoid CSS-transform conflict
+      const ring     = document.getElementById('orbit-ring');
+      const orbitObjs = ring ? Array.from(ring.querySelectorAll('.orbit-obj')) : [];
+      if (ring && orbitObjs.length && window.innerWidth >= 768) {
+        const radiusPx = Math.min(window.innerWidth * 0.21, 290);
+        const total    = orbitObjs.length;
+
+        // Set initial absolute positions centred in .orbit-ring
+        orbitObjs.forEach((obj, i) => {
+          const startDeg = (360 / total) * i - 90;
+          const rad      = (startDeg * Math.PI) / 180;
+          gsap.set(obj, {
+            position: 'absolute',
+            left: '50%', top: '50%',
+            xPercent: -50, yPercent: -50,
+            x: Math.cos(rad) * radiusPx,
+            y: Math.sin(rad) * radiusPx,
+          });
+        });
+
+        // Animate each object along its circular path
+        orbitObjs.forEach((obj, i) => {
+          const startDeg = (360 / total) * i - 90;
+          const proxy    = { angle: startDeg };
+          gsap.to(proxy, {
+            angle: startDeg + 360,
+            duration: 40,
+            ease: 'none',
+            repeat: -1,
+            onUpdate() {
+              const rad = (proxy.angle * Math.PI) / 180;
+              gsap.set(obj, {
+                x: Math.cos(rad) * radiusPx,
+                y: Math.sin(rad) * radiusPx,
+              });
+            },
+          });
+        });
+      }
+
+      // Hero elements load sequence
+      gsap.from('.aura-orb', {
+        scale: 0,
+        opacity: 0,
+        duration: 1.4,
+        ease: 'elastic.out(1,0.5)',
+        delay: 0.3,
+      });
+      gsap.from('.orbit-obj', {
+        scale: 0,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: 'back.out(2)',
+        delay: 0.8,
+      });
+
+      // Tier cards: handled by shared initRevealAnimations (data-reveal with stagger delays)
+
+      // Quiz dots update
+      const dots = document.querySelectorAll('[data-q-dot]');
+      document.addEventListener('click', (e) => {
+        if (!e.target.matches('.quiz-option')) return;
+        const q = e.target.closest('[data-question]');
+        if (!q) return;
+        const idx = parseInt(q.dataset.question) + 1;
+        dots.forEach((d, i) => d.classList.toggle('active', i <= idx));
+      });
+    });
+  </script>
+</body>
+</html>
