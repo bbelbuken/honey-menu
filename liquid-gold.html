@@ -59,7 +59,7 @@
 
     /* Slide backgrounds */
     .slide-0 { background: linear-gradient(135deg, #FBF7EE 0%, #F5EFE0 50%, #EFE4C5 100%); }
-    .slide-1 { background: var(--honey-gradient); }
+    .slide-1 { background: linear-gradient(135deg, #ffb800 0%, #ff6b00 60%, #ff4e8e 100%); }
     .slide-2 { background: linear-gradient(180deg, #F5EFE0 0%, #FBF7EE 100%); }
     .slide-3 { background: linear-gradient(135deg, #120a00 0%, #1A1200 60%, #0d0600 100%); }
 
@@ -87,6 +87,8 @@
     .slide-0 .slide-title, .slide-2 .slide-title { color: var(--dark); }
     .slide-1 .slide-title { color: var(--dark); }
     .slide-3 .slide-title { color: var(--cream); }
+    .slide-title .accent { color: var(--gold); }
+    .slide-3 .slide-title .accent { color: var(--amber); }
 
     .slide-sub {
       font-size: clamp(0.95rem, 1.15vw, 1.1rem);
@@ -337,7 +339,7 @@
       opacity: 0;
       transition: opacity 0.4s;
     }
-    .fcard:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(201,146,10,0.18), 0 0 30px rgba(188,19,254,0.1); }
+    .fcard:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(201,146,10,0.18); }
     .fcard:hover::before { opacity: 1; }
 
     .fcard-icon { width: 3rem; height: 3rem; object-fit: contain; margin-bottom: 1.25rem; transition: transform 0.4s var(--ease-primary); }
@@ -362,7 +364,7 @@
     .quiz-option:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
     .quiz-result { display: none; flex-direction: column; align-items: center; gap: 1.5rem; }
     .quiz-result-emoji { font-size: 5rem; line-height: 1; display: block; }
-    .quiz-result-tier { font-family: var(--font-display); font-size: 3.5rem; }
+    .quiz-result-tier { font-family: var(--font-display); font-size: 3.5rem; color: var(--cream); }
     .quiz-result-text { font-size: 1rem; color: rgba(251,247,238,0.55); max-width: 420px; line-height: 1.65; }
     .quiz-cta-group { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; }
     .quiz-progress { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 2rem; }
@@ -417,10 +419,10 @@
             <span class="badge-dot"></span>
             Early access — coming soon
           </div>
-          <h1 class="slide-title">your real life,<br>finally shareable.</h1>
+          <h1 class="slide-title">your real life,<br><span class="accent">finally</span> shareable.</h1>
           <p class="slide-sub">The social media where <strong>real life is the content.</strong> Not your highlight reel. What you actually did.</p>
           <div class="flex gap-sm" style="flex-wrap:wrap;">
-            <a href="#quiz" class="btn btn-honey">Find your Aura</a>
+            <a href="#quiz" class="btn btn-primary btn-dark">Find your Aura</a>
             <a href="#about" class="btn btn-outline-dark">Our story</a>
           </div>
         </div>
@@ -437,7 +439,7 @@
           <div class="slide-badge">01 / Content</div>
           <h2 class="slide-title">real life is the content.</h2>
           <p class="slide-sub">Not highlights. Not aesthetics. The book you actually finished. The run you did at 6am. <strong>Raw. Real. Witnessed.</strong></p>
-          <a href="#quiz" class="btn btn-honey">Start your journey</a>
+          <a href="#quiz" class="btn btn-primary btn-dark">Start your journey</a>
         </div>
         <div class="slide-visual">
           <img class="slide-img" src="public/creative-honey-stick_17329992.png" alt="Honey dripping from a dipper" loading="lazy" decoding="async" />
@@ -452,7 +454,7 @@
           <div class="slide-badge">02 / Circle</div>
           <h2 class="slide-title">your circle. your people.</h2>
           <p class="slide-sub">A small, trusted group who <strong>witness your habits.</strong> Not followers. Not an audience. The people who actually give a damn.</p>
-          <a href="#quiz" class="btn btn-honey">Find your Aura</a>
+          <a href="#quiz" class="btn btn-primary btn-dark">Find your Aura</a>
         </div>
         <div class="slide-visual">
           <img class="slide-img" src="public/beehive3d.png" alt="Beehive with bees" loading="lazy" decoding="async" />
@@ -467,7 +469,7 @@
           <div class="slide-badge">03 / Aura</div>
           <h2 class="slide-title">aura. not a streak.</h2>
           <p class="slide-sub">Streaks break. <strong>Aura builds.</strong> Your consistency becomes your identity — and your Circle watches it glow.</p>
-          <a href="#quiz" class="btn btn-honey">Find your Aura</a>
+          <a href="#quiz" class="btn btn-primary btn-dark">Find your Aura</a>
         </div>
         <div class="slide-visual">
           <img class="slide-img" src="public/honeydrop3d.png" alt="Golden honey drop" loading="lazy" decoding="async" />
@@ -641,8 +643,8 @@
           <svg class="ring-svg" viewBox="0 0 120 120" aria-hidden="true">
             <defs>
               <linearGradient id="ringGrad" x1="1" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#ffb800"/>
-                <stop offset="100%" stop-color="#ff4e8e"/>
+                <stop offset="0%" stop-color="#ff6ec7"/>
+                <stop offset="100%" stop-color="#ffb800"/>
               </linearGradient>
             </defs>
             <circle class="ring-bg" cx="60" cy="60" r="52"/>
@@ -655,10 +657,18 @@
         </div>
         <h3 class="quiz-result-tier">Golden</h3>
         <p class="quiz-result-text">You've got the intention. What's been missing is the right people watching.</p>
-        <div class="quiz-cta-group">
-          <a href="#" class="btn btn-honey">Claim your spot</a>
-          <button class="btn btn-ghost-lg" data-quiz-restart>Try again</button>
+        <div class="quiz-email-wrap">
+          <p class="quiz-email-label">Join the waitlist — get early access</p>
+          <form class="quiz-email-form">
+            <input class="quiz-email-input" type="email" placeholder="your@email.com" required />
+            <button type="submit" class="btn btn-amber">Claim spot</button>
+          </form>
+          <div class="quiz-email-success">
+            <span class="success-icon">🍯</span>
+            <span>You're on the list. We'll be in touch.</span>
+          </div>
         </div>
+        <button class="btn btn-ghost-lg" data-quiz-restart style="margin-top:0.5rem;font-size:0.82rem;opacity:0.6;">Try again</button>
       </div>
     </div>
   </section>

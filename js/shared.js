@@ -284,12 +284,39 @@ function initQuiz() {
     btn.addEventListener('click', () => selectAnswer(btn));
   });
 
+  // Email form submit
+  const emailForm    = quiz.querySelector('.quiz-email-form');
+  const emailSuccess = quiz.querySelector('.quiz-email-success');
+  if (emailForm) {
+    emailForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const input = emailForm.querySelector('.quiz-email-input');
+      if (!input || !input.value) return;
+
+      gsap.to(emailForm, {
+        opacity: 0, y: -8, duration: 0.3, ease: 'expo.in',
+        onComplete() {
+          emailForm.style.display = 'none';
+          if (emailSuccess) {
+            emailSuccess.style.display = 'flex';
+            gsap.fromTo(emailSuccess,
+              { opacity: 0, y: 10 },
+              { opacity: 1, y: 0, duration: 0.5, ease: 'expo.out' }
+            );
+          }
+        },
+      });
+    });
+  }
+
   if (restartBtn) {
     restartBtn.addEventListener('click', () => {
       score    = 0;
       currentQ = 0;
       resultEl.style.display = 'none';
-      if (resultOrb) gsap.killTweensOf(resultOrb);
+      // Reset email form
+      if (emailForm) { emailForm.style.display = 'flex'; gsap.set(emailForm, { opacity: 1, y: 0 }); emailForm.reset(); }
+      if (emailSuccess) emailSuccess.style.display = 'none';
       questions.forEach((q, i) => {
         q.querySelectorAll('.quiz-option').forEach(b => b.disabled = false);
         q.style.display = i === 0 ? 'flex' : 'none';

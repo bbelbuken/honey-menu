@@ -48,7 +48,7 @@
     .drip-logo-link {
       font-family: var(--font-display);
       font-size: 2.2rem;
-      color: var(--amber);
+      color: var(--dark);
       line-height: 1;
       letter-spacing: -0.01em;
     }
@@ -244,32 +244,19 @@
     }
     .hex-card:hover {
       transform: translateY(-6px);
-      box-shadow: 0 20px 50px rgba(188,19,254,0.12), 0 8px 20px rgba(255,107,0,0.1);
+      box-shadow: 0 20px 50px rgba(201,146,10,0.15);
     }
 
     /* Fill animation bg */
     .hex-card-bg {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(255,184,0,0.1), rgba(188,19,254,0.06));
+      background: linear-gradient(135deg, rgba(255,184,0,0.12), rgba(255,107,0,0.06));
       transform: translateY(101%);
       transition: transform 0.5s var(--ease-primary);
       z-index: 0;
     }
     .hex-card:hover .hex-card-bg { transform: translateY(0); }
-
-    /* Gradient top border on hover */
-    .hex-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: var(--honey-gradient);
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s var(--ease-primary);
-    }
-    .hex-card:hover::before { transform: scaleX(1); }
 
     .hex-card-content { position: relative; z-index: 1; }
 
@@ -418,6 +405,7 @@
     .quiz-result-tier {
       font-family: var(--font-display);
       font-size: clamp(2rem, 5vw, 3.5rem);
+      color: var(--cream);
     }
     .quiz-result-text {
       font-size: 1rem;
@@ -526,7 +514,7 @@
             <span data-split="words">your real life,</span>
           </span>
           <span class="word-wrap" style="display:block">
-            <span data-split="words" data-split-delay="0.08">finally <span class="accent">shareable.</span></span>
+            <span data-split="words" data-split-delay="0.08"><span class="accent">finally</span> shareable.</span>
           </span>
         </h1>
 
@@ -537,7 +525,7 @@
         </p>
 
         <div class="hero-ctas">
-          <a href="#quiz" class="btn btn-honey">Find your Aura</a>
+          <a href="#quiz" class="btn btn-dark">Find your Aura</a>
           <a href="#about" class="btn btn-outline-dark">Our story</a>
         </div>
       </div>
@@ -748,8 +736,8 @@
           <svg class="ring-svg" viewBox="0 0 120 120" aria-hidden="true">
             <defs>
               <linearGradient id="ringGrad" x1="1" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#ffb800"/>
-                <stop offset="100%" stop-color="#ff4e8e"/>
+                <stop offset="0%" stop-color="#ff6ec7"/>
+                <stop offset="100%" stop-color="#ffb800"/>
               </linearGradient>
             </defs>
             <circle class="ring-bg" cx="60" cy="60" r="52"/>
@@ -762,10 +750,18 @@
         </div>
         <h3 class="quiz-result-tier">Golden</h3>
         <p class="quiz-result-text">You've got the intention. What's been missing is the right people watching.</p>
-        <div class="quiz-cta-group">
-          <a href="#" class="btn btn-honey">Claim your spot</a>
-          <button class="btn btn-ghost" data-quiz-restart>Try again</button>
+        <div class="quiz-email-wrap">
+          <p class="quiz-email-label">Join the waitlist — get early access</p>
+          <form class="quiz-email-form">
+            <input class="quiz-email-input" type="email" placeholder="your@email.com" required />
+            <button type="submit" class="btn btn-amber">Claim spot</button>
+          </form>
+          <div class="quiz-email-success">
+            <span class="success-icon">🍯</span>
+            <span>You're on the list. We'll be in touch.</span>
+          </div>
         </div>
+        <button class="btn btn-ghost" data-quiz-restart style="margin-top:0.5rem;font-size:0.82rem;opacity:0.6;">Try again</button>
       </div>
     </div>
   </section>
@@ -775,7 +771,7 @@
     <a href="golden-flow.html" class="footer-logo">honey.</a>
     <p class="footer-tagline">Life is sweet. Prove it. — 2026</p>
     <nav class="footer-cta-group" aria-label="Footer navigation">
-      <a href="#quiz" class="btn btn-honey">Find your Aura</a>
+      <a href="#quiz" class="btn btn-dark">Find your Aura</a>
       <a href="#about" class="btn btn-outline-dark">Our story</a>
     </nav>
   </footer>
