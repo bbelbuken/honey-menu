@@ -206,8 +206,9 @@ function initQuiz() {
   const resultEl   = quiz.querySelector('.quiz-result');
   const resultTier = quiz.querySelector('.quiz-result-tier');
   const resultText = quiz.querySelector('.quiz-result-text');
-  const resultEmoji = quiz.querySelector('.quiz-result-emoji');
-  const restartBtn  = quiz.querySelector('[data-quiz-restart]');
+  const resultRingScore = quiz.querySelector('.ring-score');
+  const resultRingFill  = quiz.querySelector('.ring-fill');
+  const restartBtn      = quiz.querySelector('[data-quiz-restart]');
 
   const tiers = [
     { name: 'Raw Honey', emoji: '🐝', text: "You're at the start — and that's exactly the right place to be." },
@@ -249,13 +250,27 @@ function initQuiz() {
     resultTier.textContent = tier.name;
     resultText.textContent = tier.text;
 
-    // Set emoji
-    if (resultEmoji) {
-      resultEmoji.textContent = tier.emoji;
-      gsap.fromTo(resultEmoji,
-        { scale: 0, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.7, ease: 'back.out(1.8)', delay: 0.15 }
+    // Animate score ring
+    const scorePct = Math.round(score / maxScore * 100);
+    const circumference = 326.7; // 2 * π * 52
+
+    if (resultRingFill) {
+      const offset = circumference * (1 - scorePct / 100);
+      gsap.fromTo(resultRingFill,
+        { strokeDashoffset: circumference },
+        { strokeDashoffset: offset, duration: 1.4, ease: 'power2.out', delay: 0.25 }
       );
+    }
+
+    if (resultRingScore) {
+      const counter = { val: 0 };
+      gsap.to(counter, {
+        val: scorePct,
+        duration: 1.4,
+        ease: 'power2.out',
+        delay: 0.25,
+        onUpdate() { resultRingScore.textContent = Math.round(counter.val); },
+      });
     }
 
     resultEl.style.display = 'flex';

@@ -50,7 +50,7 @@
       justify-content: center;
       text-align: center;
       padding: 8rem var(--col-pad) 6rem;
-      overflow: hidden;
+      overflow: clip; /* clip (not hidden) so word-reveal works without horizontal scroll */
     }
 
     /* Mega background text */
@@ -172,11 +172,11 @@
 
     .hero-title {
       font-family: var(--font-display);
-      font-size: var(--title-size);
-      line-height: 0.92;
+      font-size: clamp(2.6rem, 9vw, 7.5rem);
+      line-height: 0.95;
       letter-spacing: -0.015em;
       color: var(--cream);
-      max-width: 14rem;
+      max-width: min(640px, 88vw);
       text-align: center;
     }
     .hero-title em {
@@ -857,7 +857,22 @@
       </div>
 
       <div class="quiz-result">
-        <div class="quiz-result-emoji"></div>
+        <div class="quiz-score-ring">
+          <svg class="ring-svg" viewBox="0 0 120 120" aria-hidden="true">
+            <defs>
+              <linearGradient id="ringGrad" x1="1" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ff6ec7"/>
+                <stop offset="100%" stop-color="#ffb800"/>
+              </linearGradient>
+            </defs>
+            <circle class="ring-bg" cx="60" cy="60" r="52"/>
+            <circle class="ring-fill" cx="60" cy="60" r="52"/>
+          </svg>
+          <div class="ring-center">
+            <span class="ring-score">0</span>
+            <span class="ring-label">AURA</span>
+          </div>
+        </div>
         <h3 class="quiz-result-tier">Golden</h3>
         <p class="quiz-result-text">You've got the intention. What's been missing is the right people watching.</p>
         <div class="quiz-cta-group">

@@ -24,15 +24,18 @@
       overflow: visible;
     }
 
-    /* Full-width drip image — natural aspect ratio shows all drips */
+    /* Drip image: full width, constrained height to show drips without taking the whole viewport */
     .drip-img-wrap {
       width: 100%;
       pointer-events: none;
       line-height: 0;
+      overflow: hidden;
     }
     .drip-img-wrap img {
       width: 100%;
-      height: auto;
+      height: clamp(120px, 22vw, 330px);
+      object-fit: cover;
+      object-position: bottom center;
       display: block;
     }
 
@@ -50,7 +53,7 @@
       letter-spacing: -0.01em;
     }
 
-    /* Hero content grid (same 2-col as before, no nav padding needed) */
+    /* Hero content grid */
     .hero-inner {
       position: relative;
       z-index: 1;
@@ -61,7 +64,7 @@
       width: 100%;
       max-width: var(--container-max);
       margin: 0 auto;
-      padding: 3rem var(--col-pad) clamp(3rem,6vw,6rem);
+      padding: 2rem var(--col-pad) clamp(3rem, 6vw, 6rem);
     }
 
     .hero-bg-text {
@@ -729,7 +732,22 @@
 
       <!-- Result -->
       <div class="quiz-result">
-        <div class="quiz-result-emoji"></div>
+        <div class="quiz-score-ring">
+          <svg class="ring-svg" viewBox="0 0 120 120" aria-hidden="true">
+            <defs>
+              <linearGradient id="ringGrad" x1="1" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ff6ec7"/>
+                <stop offset="100%" stop-color="#ffb800"/>
+              </linearGradient>
+            </defs>
+            <circle class="ring-bg" cx="60" cy="60" r="52"/>
+            <circle class="ring-fill" cx="60" cy="60" r="52"/>
+          </svg>
+          <div class="ring-center">
+            <span class="ring-score">0</span>
+            <span class="ring-label">AURA</span>
+          </div>
+        </div>
         <h3 class="quiz-result-tier">Golden</h3>
         <p class="quiz-result-text">You've got the intention. What's been missing is the right people watching.</p>
         <div class="quiz-cta-group">
